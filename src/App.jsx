@@ -1,5 +1,5 @@
 import React from 'react';
-import GeneralInformationForm from './components/forms/GeneralInformationForm/GeneralInformationForm.jsx';
+import GeneralInformationForm from './components/forms/GeneralInformationForm/GeneralInformationForm';
 
 function App() {
   return (
