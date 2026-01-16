@@ -17,4 +17,11 @@ describe('App component', () => {
       screen.getByRole('heading', { name: /general information/i })
     ).toBeInTheDocument();
   });
+
+  it('renders inputs for Name, Email, and Phone', () => {
+    render(<App />);
+    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
+  });
 });
