@@ -10,4 +10,11 @@ describe('App component', () => {
       screen.getByRole('heading', { name: /cv application/i })
     ).toBeInTheDocument();
   });
+
+  it('renders the General Information section', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { name: /general information/i })
+    ).toBeInTheDocument();
+  });
 });
