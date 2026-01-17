@@ -25,4 +25,11 @@ describe('App component', () => {
       screen.getByRole('heading', { name: /educational experience/i }),
     ).toBeInTheDocument();
   });
+
+  it('renders the Practical Experience section', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { name: /practical experience/i }),
+    ).toBeInTheDocument();
+  });
 });
