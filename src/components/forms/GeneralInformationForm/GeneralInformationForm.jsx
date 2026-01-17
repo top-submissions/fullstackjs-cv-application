@@ -11,6 +11,10 @@ function GeneralInformationForm() {
     setIsSubmitted(true);
   };
 
+  const handleEdit = () => {
+    setIsSubmitted(false);
+  };
+
   return (
     <div className={styles.formSection}>
       <h2>General Information</h2>
@@ -52,6 +56,7 @@ function GeneralInformationForm() {
           <p>{name}</p>
           <p>{email}</p>
           <p>{phone}</p>
+          <button onClick={handleEdit}>Edit</button>
         </div>
       )}
     </div>
