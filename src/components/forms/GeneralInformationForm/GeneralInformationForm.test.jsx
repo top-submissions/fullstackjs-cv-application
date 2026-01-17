@@ -5,21 +5,21 @@ import { describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
 describe('GeneralInformationForm', () => {
-  it('renders the General Information section', () => {
+  it('renders the General Information header', () => {
     render(<GeneralInformationForm />);
     expect(
-      screen.getByRole('heading', { name: /general information/i })
+      screen.getByRole('heading', { name: /general information/i }),
     ).toBeInTheDocument();
   });
 
-  it('renders inputs for Name, Email, and Phone', () => {
+  it('renders input fields for Name, Email, and Phone', () => {
     render(<GeneralInformationForm />);
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
   });
 
-  it('displays the typed General Information', async () => {
+  it('displays the typed General Information form input field values', async () => {
     const user = userEvent.setup();
     render(<GeneralInformationForm />);
 
