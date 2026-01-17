@@ -35,4 +35,27 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
     expect(screen.getByText('123-456-7890')).toBeInTheDocument();
   });
+
+  it('hides form inputs and shows only preview when Submit button is clicked', async () => {
+    const user = userEvent.setup();
+    render(<GeneralInformationForm />);
+
+    const nameInput = screen.getByLabelText(/name/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    const phoneInput = screen.getByLabelText(/phone/i);
+
+    await user.type(nameInput, 'John Doe');
+    await user.type(emailInput, 'john@example.com');
+    await user.type(phoneInput, '123-456-7890');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.queryByLabelText(/name/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/email/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/phone/i)).not.toBeInTheDocument();
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByText('123-456-7890')).toBeInTheDocument();
+  });
 });
