@@ -8,7 +8,21 @@ describe('App component', () => {
   it('renders the main page with project heading', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: /cv application/i })
+      screen.getByRole('heading', { name: /cv application/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the General Information form section', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { name: /general information/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the Educational Experience form section', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { name: /educational experience/i }),
     ).toBeInTheDocument();
   });
 });
