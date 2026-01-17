@@ -5,7 +5,7 @@ import EducationalExperienceForm from './EducationalExperienceForm';
 import React from 'react';
 
 describe('EducationalExperienceForm', () => {
-  it('renders Educational Experience header', () => {
+  it('renders the form header', () => {
     render(<EducationalExperienceForm />);
     expect(
       screen.getByRole('heading', { name: /educational experience/i }),
@@ -19,8 +19,7 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
   });
 
-  // NEW TEST
-  it('displays the typed Educational Experience form input field values', async () => {
+  it('displays the typed input field values', async () => {
     const user = userEvent.setup();
     render(<EducationalExperienceForm />);
 

@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
 describe('GeneralInformationForm', () => {
-  it('renders the General Information header', () => {
+  it('renders the form header', () => {
     render(<GeneralInformationForm />);
     expect(
       screen.getByRole('heading', { name: /general information/i }),
@@ -19,7 +19,7 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
   });
 
-  it('displays the typed General Information form input field values', async () => {
+  it('displays the typed input field values', async () => {
     const user = userEvent.setup();
     render(<GeneralInformationForm />);
 
