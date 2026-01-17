@@ -35,4 +35,27 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByText('Computer Science')).toBeInTheDocument();
     expect(screen.getByText('2020-2024')).toBeInTheDocument();
   });
+
+  it('hides form inputs and shows only preview when Submit button is clicked', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
+    await user.type(schoolNameInput, 'Harvard University');
+    await user.type(titleInput, 'Computer Science');
+    await user.type(dateInput, '2020-2024');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.queryByLabelText(/school name/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/title of study/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/date of study/i)).not.toBeInTheDocument();
+    expect(screen.getByText('Harvard University')).toBeInTheDocument();
+    expect(screen.getByText('Computer Science')).toBeInTheDocument();
+    expect(screen.getByText('2020-2024')).toBeInTheDocument();
+  });
 });
