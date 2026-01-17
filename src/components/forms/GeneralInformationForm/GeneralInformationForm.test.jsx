@@ -58,4 +58,23 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
     expect(screen.getByText('123-456-7890')).toBeInTheDocument();
   });
+
+  it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
+    const user = userEvent.setup();
+    render(<GeneralInformationForm />);
+
+    const nameInput = screen.getByLabelText(/name/i);
+    await user.type(nameInput, 'John Doe');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
