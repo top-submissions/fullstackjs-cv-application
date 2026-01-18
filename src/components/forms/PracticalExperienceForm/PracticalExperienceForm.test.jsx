@@ -60,4 +60,23 @@ describe('PracticalExperienceForm', () => {
     expect(screen.getByText('Software Engineer')).toBeInTheDocument();
     expect(screen.getByText('2020-2023')).toBeInTheDocument();
   });
+
+  it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
+    const user = userEvent.setup();
+    render(<PracticalExperienceForm />);
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
