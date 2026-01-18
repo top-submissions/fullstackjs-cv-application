@@ -64,7 +64,12 @@ describe('EducationalExperienceForm', () => {
     render(<EducationalExperienceForm />);
 
     const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
     await user.type(schoolNameInput, 'Harvard University');
+    await user.type(titleInput, 'Computer Science');
+    await user.type(dateInput, '2020-2024');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -83,16 +88,19 @@ describe('EducationalExperienceForm', () => {
     render(<EducationalExperienceForm />);
 
     const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
     await user.type(schoolNameInput, 'Harvard University');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    await user.click(submitButton);
+    await user.type(titleInput, 'Computer Science');
+    await user.type(dateInput, '2020-2024');
 
     const addButton = screen.getByRole('button', { name: /add/i });
     await user.click(addButton);
 
-    expect(screen.getByLabelText(/school name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/title of study/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
+    expect(screen.getAllByLabelText(/school name/i)).toHaveLength(2);
+    expect(screen.getAllByLabelText(/title of study/i)).toHaveLength(2);
+    expect(screen.getAllByLabelText(/date of study/i)).toHaveLength(2);
 
     expect(screen.getByText('Harvard University')).toBeInTheDocument();
   });
@@ -102,14 +110,27 @@ describe('EducationalExperienceForm', () => {
     render(<EducationalExperienceForm />);
 
     const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
     await user.type(schoolNameInput, 'Harvard University');
+    await user.type(titleInput, 'Computer Science');
+    await user.type(dateInput, '2020-2024');
+
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
     const addButton = screen.getByRole('button', { name: /add/i });
     await user.click(addButton);
+
     const schoolNameInput2 = screen.getByLabelText(/school name/i);
+    const titleInput2 = screen.getByLabelText(/title of study/i);
+    const dateInput2 = screen.getByLabelText(/date of study/i);
+
     await user.type(schoolNameInput2, 'MIT');
+    await user.type(titleInput2, 'Engineering');
+    await user.type(dateInput2, '2016-2020');
+
     const submitButton2 = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton2);
 
@@ -121,5 +142,18 @@ describe('EducationalExperienceForm', () => {
 
     expect(screen.queryByText('Harvard University')).not.toBeInTheDocument();
     expect(screen.getByText('MIT')).toBeInTheDocument();
+  });
+
+  it('prevents submission when required fields are empty', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByLabelText(/school name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/title of study/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
 });
