@@ -33,11 +33,19 @@ function PracticalExperienceForm() {
   };
 
   const handleSubmit = (id) => {
-    setEntries(
-      entries.map((entry) =>
-        entry.id === id ? { ...entry, isSubmitted: true } : entry,
-      ),
-    );
+    const entry = entries.find((e) => e.id === id);
+    if (
+      entry &&
+      entry.companyName.trim() &&
+      entry.positionTitle.trim() &&
+      entry.dateOfEmployment.trim()
+    ) {
+      setEntries(
+        entries.map((entry) =>
+          entry.id === id ? { ...entry, isSubmitted: true } : entry,
+        ),
+      );
+    }
   };
 
   const handleEdit = (id) => {
