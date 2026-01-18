@@ -48,6 +48,10 @@ function PracticalExperienceForm() {
     );
   };
 
+  const handleDelete = (id) => {
+    setEntries(entries.filter((entry) => entry.id !== id));
+  };
+
   return (
     <div>
       <h2>Practical Experience</h2>
@@ -98,6 +102,9 @@ function PracticalExperienceForm() {
               <p>{entry.positionTitle}</p>
               <p>{entry.dateOfEmployment}</p>
               <button onClick={() => handleEdit(entry.id)}>Edit</button>
+              <button onClick={() => handleDelete(entry.id)}>
+                Delete
+              </button>{' '}
             </div>
           )}
         </div>
