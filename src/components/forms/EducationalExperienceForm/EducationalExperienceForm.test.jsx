@@ -77,4 +77,23 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('allows adding multiple educational experience entries', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Harvard University');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    await user.click(addButton);
+
+    expect(screen.getByLabelText(/school name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/title of study/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
+
+    expect(screen.getByText('Harvard University')).toBeInTheDocument();
+  });
 });
