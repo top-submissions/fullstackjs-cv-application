@@ -8,7 +8,9 @@ function GeneralInformationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = () => {
-    setIsSubmitted(true);
+    if (name.trim() && email.trim() && phone.trim()) {
+      setIsSubmitted(true);
+    }
   };
 
   const handleEdit = () => {
