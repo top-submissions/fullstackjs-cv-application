@@ -98,4 +98,35 @@ describe('PracticalExperienceForm', () => {
 
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
   });
+
+  it('allows deleting individual practical experience entries', async () => {
+    const user = userEvent.setup();
+    render(<PracticalExperienceForm />);
+
+    // Create and submit first entry
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    // Create and submit second entry
+    const addButton = screen.getByRole('button', { name: /add/i });
+    await user.click(addButton);
+    const companyNameInput2 = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput2, 'Microsoft');
+    const submitButton2 = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton2);
+
+    // Verify both entries exist
+    expect(screen.getByText('Google Inc.')).toBeInTheDocument();
+    expect(screen.getByText('Microsoft')).toBeInTheDocument();
+
+    // Delete first entry
+    const deleteButtons = screen.getAllByRole('button', { name: /delete/i });
+    await user.click(deleteButtons[0]);
+
+    // Verify first entry is removed and second entry remains
+    expect(screen.queryByText('Google Inc.')).not.toBeInTheDocument();
+    expect(screen.getByText('Microsoft')).toBeInTheDocument();
+  });
 });
