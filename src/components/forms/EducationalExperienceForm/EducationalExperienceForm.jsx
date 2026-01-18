@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function EducationalExperienceForm() {
   const [entries, setEntries] = useState([
     {
-      id: crypto.randomUUID(),
+      id: 1,
       schoolName: '',
       titleOfStudy: '',
       dateOfStudy: '',
@@ -15,7 +15,7 @@ function EducationalExperienceForm() {
     setEntries([
       ...entries,
       {
-        id: crypto.randomUUID(),
+        id: Date.now() + Math.random(),
         schoolName: '',
         titleOfStudy: '',
         dateOfStudy: '',
@@ -33,11 +33,19 @@ function EducationalExperienceForm() {
   };
 
   const handleSubmit = (id) => {
-    setEntries(
-      entries.map((entry) =>
-        entry.id === id ? { ...entry, isSubmitted: true } : entry,
-      ),
-    );
+    const entry = entries.find((e) => e.id === id);
+    if (
+      entry &&
+      entry.schoolName.trim() &&
+      entry.titleOfStudy.trim() &&
+      entry.dateOfStudy.trim()
+    ) {
+      setEntries(
+        entries.map((entry) =>
+          entry.id === id ? { ...entry, isSubmitted: true } : entry,
+        ),
+      );
+    }
   };
 
   const handleEdit = (id) => {
