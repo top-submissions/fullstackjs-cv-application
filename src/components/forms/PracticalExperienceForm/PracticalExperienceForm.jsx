@@ -1,63 +1,108 @@
-import React, { useState } from 'react'; // ADDED: React and useState import
+import React, { useState } from 'react';
 
 function PracticalExperienceForm() {
-  const [companyName, setCompanyName] = useState('');
-  const [positionTitle, setPositionTitle] = useState('');
-  const [dateOfEmployment, setDateOfEmployment] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [entries, setEntries] = useState([
+    {
+      id: crypto.randomUUID(),
+      companyName: '',
+      positionTitle: '',
+      dateOfEmployment: '',
+      isSubmitted: false,
+    },
+  ]);
 
-  const handleSubmit = () => {
-    setIsSubmitted(true);
+  const handleAdd = () => {
+    setEntries([
+      ...entries,
+      {
+        id: crypto.randomUUID(),
+        companyName: '',
+        positionTitle: '',
+        dateOfEmployment: '',
+        isSubmitted: false,
+      },
+    ]);
   };
 
-  const handleEdit = () => {
-    setIsSubmitted(false);
+  const handleUpdate = (id, field, value) => {
+    setEntries(
+      entries.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value } : entry,
+      ),
+    );
+  };
+
+  const handleSubmit = (id) => {
+    setEntries(
+      entries.map((entry) =>
+        entry.id === id ? { ...entry, isSubmitted: true } : entry,
+      ),
+    );
+  };
+
+  const handleEdit = (id) => {
+    setEntries(
+      entries.map((entry) =>
+        entry.id === id ? { ...entry, isSubmitted: false } : entry,
+      ),
+    );
   };
 
   return (
     <div>
       <h2>Practical Experience</h2>
-      {!isSubmitted ? (
-        <>
-          <label>
-            Company Name:{' '}
-            <input
-              type="text"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-            />{' '}
-          </label>
-          <label>
-            Position Title:{' '}
-            <input
-              type="text"
-              value={positionTitle}
-              onChange={(e) => setPositionTitle(e.target.value)}
-            />{' '}
-          </label>
-          <label>
-            Date of Employment:{' '}
-            <input
-              type="text"
-              value={dateOfEmployment}
-              onChange={(e) => setDateOfEmployment(e.target.value)}
-            />{' '}
-          </label>
-          <button onClick={handleSubmit}>Submit</button>
-          <div>
-            <p>{companyName}</p>
-            <p>{positionTitle}</p>
-            <p>{dateOfEmployment}</p>
-          </div>
-        </>
-      ) : (
-        <div>
-          <p>{companyName}</p>
-          <p>{positionTitle}</p>
-          <p>{dateOfEmployment}</p>
-          <button onClick={handleEdit}>Edit</button>
+      {entries.map((entry) => (
+        <div key={entry.id}>
+          {!entry.isSubmitted ? (
+            <>
+              <label>
+                Company Name:{' '}
+                <input
+                  type="text"
+                  value={entry.companyName}
+                  onChange={(e) =>
+                    handleUpdate(entry.id, 'companyName', e.target.value)
+                  }
+                />{' '}
+              </label>
+              <label>
+                Position Title:{' '}
+                <input
+                  type="text"
+                  value={entry.positionTitle}
+                  onChange={(e) =>
+                    handleUpdate(entry.id, 'positionTitle', e.target.value)
+                  }
+                />{' '}
+              </label>
+              <label>
+                Date of Employment:{' '}
+                <input
+                  type="text"
+                  value={entry.dateOfEmployment}
+                  onChange={(e) =>
+                    handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
+                  }
+                />{' '}
+              </label>
+              <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+              <div>
+                <p>{entry.companyName}</p>
+                <p>{entry.positionTitle}</p>
+                <p>{entry.dateOfEmployment}</p>
+              </div>
+            </>
+          ) : (
+            <div>
+              <p>{entry.companyName}</p>
+              <p>{entry.positionTitle}</p>
+              <p>{entry.dateOfEmployment}</p>
+              <button onClick={() => handleEdit(entry.id)}>Edit</button>
+            </div>
+          )}
         </div>
-      )}
+      ))}
+      <button onClick={handleAdd}>Add</button>
     </div>
   );
 }
