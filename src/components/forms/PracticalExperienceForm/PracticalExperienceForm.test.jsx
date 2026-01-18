@@ -67,6 +67,10 @@ describe('PracticalExperienceForm', () => {
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, '2020-2023');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -86,6 +90,10 @@ describe('PracticalExperienceForm', () => {
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, '2020-2023');
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
@@ -106,6 +114,10 @@ describe('PracticalExperienceForm', () => {
     // Create and submit first entry
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, '2020-2023');
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
@@ -114,6 +126,10 @@ describe('PracticalExperienceForm', () => {
     await user.click(addButton);
     const companyNameInput2 = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput2, 'Microsoft');
+    const positionInput2 = screen.getByLabelText(/position title/i);
+    await user.type(positionInput2, 'Senior Engineer');
+    const dateInput2 = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput2, '2023-2024');
     const submitButton2 = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton2);
 
@@ -128,5 +144,18 @@ describe('PracticalExperienceForm', () => {
     // Verify first entry is removed and second entry remains
     expect(screen.queryByText('Google Inc.')).not.toBeInTheDocument();
     expect(screen.getByText('Microsoft')).toBeInTheDocument();
+  });
+
+  it('prevents submission when required fields are empty', async () => {
+    const user = userEvent.setup();
+    render(<PracticalExperienceForm />);
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
 });
