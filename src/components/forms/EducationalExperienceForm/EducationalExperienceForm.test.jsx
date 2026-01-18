@@ -58,4 +58,23 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByText('Computer Science')).toBeInTheDocument();
     expect(screen.getByText('2020-2024')).toBeInTheDocument();
   });
+
+  it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Harvard University');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    expect(screen.getByLabelText(/school name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/title of study/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
