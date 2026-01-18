@@ -4,39 +4,55 @@ function PracticalExperienceForm() {
   const [companyName, setCompanyName] = useState('');
   const [positionTitle, setPositionTitle] = useState('');
   const [dateOfEmployment, setDateOfEmployment] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    setIsSubmitted(true);
+  };
 
   return (
     <div>
       <h2>Practical Experience</h2>
-      <label>
-        Company Name:{' '}
-        <input
-          type="text"
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-        />{' '}
-      </label>
-      <label>
-        Position Title:{' '}
-        <input
-          type="text"
-          value={positionTitle}
-          onChange={(e) => setPositionTitle(e.target.value)}
-        />{' '}
-      </label>
-      <label>
-        Date of Employment:{' '}
-        <input
-          type="text"
-          value={dateOfEmployment}
-          onChange={(e) => setDateOfEmployment(e.target.value)}
-        />{' '}
-      </label>
-      <div>
-        <p>{companyName}</p>
-        <p>{positionTitle}</p>
-        <p>{dateOfEmployment}</p>
-      </div>
+      {!isSubmitted ? (
+        <>
+          <label>
+            Company Name:{' '}
+            <input
+              type="text"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+            />{' '}
+          </label>
+          <label>
+            Position Title:{' '}
+            <input
+              type="text"
+              value={positionTitle}
+              onChange={(e) => setPositionTitle(e.target.value)}
+            />{' '}
+          </label>
+          <label>
+            Date of Employment:{' '}
+            <input
+              type="text"
+              value={dateOfEmployment}
+              onChange={(e) => setDateOfEmployment(e.target.value)}
+            />{' '}
+          </label>
+          <button onClick={handleSubmit}>Submit</button>
+          <div>
+            <p>{companyName}</p>
+            <p>{positionTitle}</p>
+            <p>{dateOfEmployment}</p>
+          </div>
+        </>
+      ) : (
+        <div>
+          <p>{companyName}</p>
+          <p>{positionTitle}</p>
+          <p>{dateOfEmployment}</p>
+        </div>
+      )}
     </div>
   );
 }
