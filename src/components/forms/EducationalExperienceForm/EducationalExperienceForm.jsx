@@ -10,6 +10,10 @@ function EducationalExperienceForm() {
     setIsSubmitted(true);
   };
 
+  const handleEdit = () => {
+    setIsSubmitted(false);
+  };
+
   return (
     <div>
       <h2>Educational Experience</h2>
@@ -39,7 +43,7 @@ function EducationalExperienceForm() {
               onChange={(e) => setDateOfStudy(e.target.value)}
             />{' '}
           </label>
-          <button onClick={handleSubmit}>Submit</button>{' '}
+          <button onClick={handleSubmit}>Submit</button>
           <div>
             <p>{schoolName}</p>
             <p>{titleOfStudy}</p>
@@ -51,6 +55,7 @@ function EducationalExperienceForm() {
           <p>{schoolName}</p>
           <p>{titleOfStudy}</p>
           <p>{dateOfStudy}</p>
+          <button onClick={handleEdit}>Edit</button>
         </div>
       )}
     </div>
