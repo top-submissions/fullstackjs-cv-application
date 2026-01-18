@@ -79,4 +79,23 @@ describe('PracticalExperienceForm', () => {
     expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('allows adding multiple practical experience entries', async () => {
+    const user = userEvent.setup();
+    render(<PracticalExperienceForm />);
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    await user.click(addButton);
+
+    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
+
+    expect(screen.getByText('Google Inc.')).toBeInTheDocument();
+  });
 });
