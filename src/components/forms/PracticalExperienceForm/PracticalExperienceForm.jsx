@@ -10,6 +10,10 @@ function PracticalExperienceForm() {
     setIsSubmitted(true);
   };
 
+  const handleEdit = () => {
+    setIsSubmitted(false);
+  };
+
   return (
     <div>
       <h2>Practical Experience</h2>
@@ -51,6 +55,7 @@ function PracticalExperienceForm() {
           <p>{companyName}</p>
           <p>{positionTitle}</p>
           <p>{dateOfEmployment}</p>
+          <button onClick={handleEdit}>Edit</button>
         </div>
       )}
     </div>
