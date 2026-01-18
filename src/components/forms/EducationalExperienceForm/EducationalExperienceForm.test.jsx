@@ -96,4 +96,30 @@ describe('EducationalExperienceForm', () => {
 
     expect(screen.getByText('Harvard University')).toBeInTheDocument();
   });
+
+  it('allows deleting individual educational experience entries', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Harvard University');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    await user.click(addButton);
+    const schoolNameInput2 = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput2, 'MIT');
+    const submitButton2 = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton2);
+
+    expect(screen.getByText('Harvard University')).toBeInTheDocument();
+    expect(screen.getByText('MIT')).toBeInTheDocument();
+
+    const deleteButtons = screen.getAllByRole('button', { name: /delete/i });
+    await user.click(deleteButtons[0]);
+
+    expect(screen.queryByText('Harvard University')).not.toBeInTheDocument();
+    expect(screen.getByText('MIT')).toBeInTheDocument();
+  });
 });
