@@ -8,7 +8,8 @@ function GeneralInformationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = () => {
-    if (name.trim() && email.trim() && phone.trim()) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (name.trim() && email.trim() && phone.trim() && emailRegex.test(email)) {
       setIsSubmitted(true);
     }
   };
