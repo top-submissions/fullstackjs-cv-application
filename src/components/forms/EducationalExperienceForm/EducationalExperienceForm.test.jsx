@@ -29,11 +29,11 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
-    await user.type(dateInput, '2020-2024');
+    await user.type(dateInput, '2020-01-01');
 
     expect(screen.getByText('Harvard University')).toBeInTheDocument();
     expect(screen.getByText('Computer Science')).toBeInTheDocument();
-    expect(screen.getByText('2020-2024')).toBeInTheDocument();
+    expect(screen.getByText('2020-01-01')).toBeInTheDocument();
   });
 
   it('hides form inputs and shows only preview when Submit button is clicked', async () => {
@@ -46,7 +46,7 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
-    await user.type(dateInput, '2020-2024');
+    await user.type(dateInput, '2020-01-01');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -56,7 +56,7 @@ describe('EducationalExperienceForm', () => {
     expect(screen.queryByLabelText(/date of study/i)).not.toBeInTheDocument();
     expect(screen.getByText('Harvard University')).toBeInTheDocument();
     expect(screen.getByText('Computer Science')).toBeInTheDocument();
-    expect(screen.getByText('2020-2024')).toBeInTheDocument();
+    expect(screen.getByText('2020-01-01')).toBeInTheDocument();
   });
 
   it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
@@ -69,7 +69,7 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
-    await user.type(dateInput, '2020-2024');
+    await user.type(dateInput, '2020-01-01');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -93,7 +93,7 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
-    await user.type(dateInput, '2020-2024');
+    await user.type(dateInput, '2020-01-01');
 
     const addButton = screen.getByRole('button', { name: /add/i });
     await user.click(addButton);
@@ -115,7 +115,7 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
-    await user.type(dateInput, '2020-2024');
+    await user.type(dateInput, '2020-01-01');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -129,7 +129,7 @@ describe('EducationalExperienceForm', () => {
 
     await user.type(schoolNameInput2, 'MIT');
     await user.type(titleInput2, 'Engineering');
-    await user.type(dateInput2, '2016-2020');
+    await user.type(dateInput2, '2016-01-01');
 
     const submitButton2 = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton2);
