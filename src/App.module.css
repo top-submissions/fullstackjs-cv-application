@@ -77,3 +77,13 @@
     font-size: 2rem;
   }
 }
+
+@media print {
+  button {
+    display: none !important;
+  }
+  .appContainer {
+    padding: 0;
+    max-width: 100%;
+  }
+}
