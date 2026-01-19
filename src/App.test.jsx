@@ -84,4 +84,12 @@ describe('App component', () => {
 
     expect(printButton.className).toMatch(/printButton/);
   });
+
+  it('includes a print media query to hide buttons', () => {
+    const cssPath = path.join(process.cwd(), 'src', 'App.module.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+
+    expect(cssContent).toMatch(/@media\s*print/);
+    expect(cssContent).toMatch(/display:\s*none/);
+  });
 });
