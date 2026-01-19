@@ -114,4 +114,23 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('prevents submission when phone format is invalid', async () => {
+    const user = userEvent.setup();
+    render(<GeneralInformationForm />);
+
+    const nameInput = screen.getByLabelText(/name/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    const phoneInput = screen.getByLabelText(/phone/i);
+
+    await user.type(nameInput, 'John Doe');
+    await user.type(emailInput, 'john@example.com');
+    await user.type(phoneInput, 'invalid-phone-abc');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
