@@ -34,11 +34,13 @@ function EducationalExperienceForm() {
 
   const handleSubmit = (id) => {
     const entry = entries.find((e) => e.id === id);
+    const dateRegex = /^[\d\s\-/]+$/;
     if (
       entry &&
       entry.schoolName.trim() &&
       entry.titleOfStudy.trim() &&
-      entry.dateOfStudy.trim()
+      entry.dateOfStudy.trim() &&
+      dateRegex.test(entry.dateOfStudy)
     ) {
       setEntries(
         entries.map((entry) =>
@@ -90,7 +92,7 @@ function EducationalExperienceForm() {
               <label>
                 Date of Study:{' '}
                 <input
-                  type="text"
+                  type="date"
                   value={entry.dateOfStudy}
                   onChange={(e) =>
                     handleUpdate(entry.id, 'dateOfStudy', e.target.value)
