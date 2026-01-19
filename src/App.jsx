@@ -1,11 +1,12 @@
 import React from 'react';
+import styles from './App.module.css';
 import GeneralInformationForm from './components/forms/GeneralInformationForm/GeneralInformationForm';
 import EducationalExperienceForm from './components/forms/EducationalExperienceForm/EducationalExperienceForm';
 import PracticalExperienceForm from './components/forms/PracticalExperienceForm/PracticalExperienceForm';
 
 function App() {
   return (
-    <div>
+    <div className={styles.appContainer}>
       <h1>CV Application</h1>
       <GeneralInformationForm />
       <EducationalExperienceForm />
