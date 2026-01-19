@@ -32,4 +32,13 @@ describe('App component', () => {
       screen.getByRole('heading', { name: /practical experience/i }),
     ).toBeInTheDocument();
   });
+
+  it('renders a main layout container with "appContainer" class', () => {
+    render(<App />);
+
+    const heading = screen.getByRole('heading', { name: /cv application/i });
+    const layoutContainer = heading.parentElement;
+
+    expect(layoutContainer.className).toMatch(/appContainer/);
+  });
 });
