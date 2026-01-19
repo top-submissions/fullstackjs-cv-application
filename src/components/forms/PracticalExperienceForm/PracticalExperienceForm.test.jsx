@@ -29,11 +29,11 @@ describe('PracticalExperienceForm', () => {
 
     await user.type(companyNameInput, 'Google Inc.');
     await user.type(positionInput, 'Software Engineer');
-    await user.type(dateInput, '2020-2023');
+    await user.type(dateInput, '2020-10-01');
 
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
     expect(screen.getByText('Software Engineer')).toBeInTheDocument();
-    expect(screen.getByText('2020-2023')).toBeInTheDocument();
+    expect(screen.getByText('2020-10-01')).toBeInTheDocument();
   });
 
   it('hides form inputs and shows only preview when Submit button is clicked', async () => {
@@ -46,7 +46,7 @@ describe('PracticalExperienceForm', () => {
 
     await user.type(companyNameInput, 'Google Inc.');
     await user.type(positionInput, 'Software Engineer');
-    await user.type(dateInput, '2020-2023');
+    await user.type(dateInput, '2020-10-01');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -58,7 +58,7 @@ describe('PracticalExperienceForm', () => {
     ).not.toBeInTheDocument();
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
     expect(screen.getByText('Software Engineer')).toBeInTheDocument();
-    expect(screen.getByText('2020-2023')).toBeInTheDocument();
+    expect(screen.getByText('2020-10-01')).toBeInTheDocument();
   });
 
   it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
@@ -70,7 +70,7 @@ describe('PracticalExperienceForm', () => {
     const positionInput = screen.getByLabelText(/position title/i);
     await user.type(positionInput, 'Software Engineer');
     const dateInput = screen.getByLabelText(/date of employment/i);
-    await user.type(dateInput, '2020-2023');
+    await user.type(dateInput, '2020-10-01');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -93,7 +93,7 @@ describe('PracticalExperienceForm', () => {
     const positionInput = screen.getByLabelText(/position title/i);
     await user.type(positionInput, 'Software Engineer');
     const dateInput = screen.getByLabelText(/date of employment/i);
-    await user.type(dateInput, '2020-2023');
+    await user.type(dateInput, '2020-10-01');
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
@@ -117,7 +117,7 @@ describe('PracticalExperienceForm', () => {
     const positionInput = screen.getByLabelText(/position title/i);
     await user.type(positionInput, 'Software Engineer');
     const dateInput = screen.getByLabelText(/date of employment/i);
-    await user.type(dateInput, '2020-2023');
+    await user.type(dateInput, '2020-10-01');
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
@@ -129,7 +129,7 @@ describe('PracticalExperienceForm', () => {
     const positionInput2 = screen.getByLabelText(/position title/i);
     await user.type(positionInput2, 'Senior Engineer');
     const dateInput2 = screen.getByLabelText(/date of employment/i);
-    await user.type(dateInput2, '2023-2024');
+    await user.type(dateInput2, '2023-01-01');
     const submitButton2 = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton2);
 
@@ -157,5 +157,23 @@ describe('PracticalExperienceForm', () => {
     expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
+
+  it('prevents submission when date format is invalid', async () => {
+    const user = userEvent.setup();
+    render(<PracticalExperienceForm />);
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, 'invalid-date');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
   });
 });
