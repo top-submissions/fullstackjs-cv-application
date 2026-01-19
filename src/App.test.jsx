@@ -3,6 +3,9 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import React from 'react';
 import { describe, it, expect } from 'vitest';
+import process from 'process';
+import fs from 'fs';
+import path from 'path';
 
 describe('App component', () => {
   it('renders the main page with project heading', () => {
@@ -48,5 +51,12 @@ describe('App component', () => {
     const heading = screen.getByRole('heading', { name: /cv application/i });
 
     expect(heading.className).toMatch(/headerTitle/);
+  });
+
+  it('includes a responsive design media query in the CSS module', () => {
+    const cssPath = path.join(process.cwd(), 'src', 'App.module.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+
+    expect(cssContent).toMatch(/@media\s*\(max-width/);
   });
 });
