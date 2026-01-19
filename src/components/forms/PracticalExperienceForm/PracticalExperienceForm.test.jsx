@@ -176,4 +176,13 @@ describe('PracticalExperienceForm', () => {
 
     expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
   });
+
+  it('wraps form inputs in a container with "formContainer" class for styling', () => {
+    render(<PracticalExperienceForm />);
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    const container = companyNameInput.closest('div');
+
+    expect(container.className).toMatch(/formContainer/);
+  });
 });
