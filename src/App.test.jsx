@@ -41,4 +41,12 @@ describe('App component', () => {
 
     expect(layoutContainer.className).toMatch(/appContainer/);
   });
+
+  it('renders the application title with "headerTitle" class for styling', () => {
+    render(<App />);
+
+    const heading = screen.getByRole('heading', { name: /cv application/i });
+
+    expect(heading.className).toMatch(/headerTitle/);
+  });
 });
