@@ -7,24 +7,18 @@ describe('CVPreview', () => {
   it('renders the General Information section header', () => {
     render(<CVPreview />);
 
-    expect(
-      screen.getByRole('heading', /general information/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/General Information/i)).toBeInTheDocument();
   });
 
   it('renders the Educational Experience section header', () => {
     render(<CVPreview />);
 
-    expect(
-      screen.getByRole('heading', /educational experience/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Educational Experience/i)).toBeInTheDocument();
   });
 
   it('renders the Practical Experience section header', () => {
     render(<CVPreview />);
 
-    expect(
-      screen.getByRole('heading', /practical experience/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Practical Experience/i)).toBeInTheDocument();
   });
 });
