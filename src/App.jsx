@@ -11,6 +11,7 @@ function App() {
       <GeneralInformationForm />
       <EducationalExperienceForm />
       <PracticalExperienceForm />
+      <button onClick={() => window.print()}>Print / Export</button>
     </div>
   );
 }
