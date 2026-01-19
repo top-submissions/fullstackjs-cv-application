@@ -156,4 +156,23 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('prevents submission when date format is invalid', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
+    await user.type(schoolNameInput, 'Harvard University');
+    await user.type(titleInput, 'Computer Science');
+    await user.type(dateInput, 'invalid date abc');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
