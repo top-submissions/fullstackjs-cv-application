@@ -114,15 +114,25 @@ function EducationalExperienceForm() {
               <p>{entry.schoolName}</p>
               <p>{entry.titleOfStudy}</p>
               <p>{entry.dateOfStudy}</p>
-              <button onClick={() => handleEdit(entry.id)}>Edit</button>
-              <button onClick={() => handleDelete(entry.id)}>
+              <button
+                className={styles.editButton}
+                onClick={() => handleEdit(entry.id)}
+              >
+                Edit
+              </button>
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDelete(entry.id)}
+              >
                 Delete
               </button>{' '}
             </div>
           )}
         </div>
       ))}
-      <button onClick={handleAdd}>Add</button>
+      <button className={styles.addButton} onClick={handleAdd}>
+        Add
+      </button>
     </div>
   );
 }

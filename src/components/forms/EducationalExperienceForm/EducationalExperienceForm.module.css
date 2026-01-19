@@ -41,3 +41,44 @@
 .formContainer button:hover {
   background-color: #1d4ed8;
 }
+
+.addButton {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #059669;
+}
+
+.editButton {
+  margin-right: 8px;
+  padding: 6px 12px;
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background-color: #d97706;
+}
+
+.deleteButton {
+  padding: 6px 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+}
