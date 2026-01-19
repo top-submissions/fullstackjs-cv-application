@@ -184,4 +184,28 @@ describe('EducationalExperienceForm', () => {
 
     expect(container.className).toMatch(/formContainer/);
   });
+
+  it('applies specific styling classes to action buttons (Add, Edit, Delete)', async () => {
+    const user = userEvent.setup();
+    render(<EducationalExperienceForm />);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    expect(addButton.className).toMatch(/addButton/);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Test School');
+    const titleInput = screen.getByLabelText(/title of study/i);
+    await user.type(titleInput, 'Test Title');
+    const dateInput = screen.getByLabelText(/date of study/i);
+    await user.type(dateInput, '2020-01-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    const deleteButton = screen.getByRole('button', { name: /delete/i });
+
+    expect(editButton.className).toMatch(/editButton/);
+    expect(deleteButton.className).toMatch(/deleteButton/);
+  });
 });
