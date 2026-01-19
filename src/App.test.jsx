@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import React from 'react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import process from 'process';
 import fs from 'fs';
 import path from 'path';
@@ -58,5 +58,20 @@ describe('App component', () => {
     const cssContent = fs.readFileSync(cssPath, 'utf-8');
 
     expect(cssContent).toMatch(/@media\s*\(max-width/);
+  });
+
+  it('renders a Print/Export button that triggers window.print', async () => {
+    const user = userEvent.setup();
+    const printSpy = vi.spyOn(window, 'print').mockImplementation(() => {});
+
+    render(<App />);
+
+    const printButton = screen.getByRole('button', {
+      name: /print \/ export/i,
+    });
+    await user.click(printButton);
+
+    expect(printSpy).toHaveBeenCalled();
+    printSpy.mockRestore();
   });
 });
