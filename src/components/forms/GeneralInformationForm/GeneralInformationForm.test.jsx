@@ -133,4 +133,13 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('wraps form inputs in a container with "formContainer" class for styling', () => {
+    render(<GeneralInformationForm />);
+
+    const nameInput = screen.getByLabelText(/name/i);
+    const container = nameInput.closest('div');
+
+    expect(container.className).toMatch(/formContainer/);
+  });
 });
