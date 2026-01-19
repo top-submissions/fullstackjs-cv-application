@@ -34,11 +34,12 @@ function PracticalExperienceForm() {
 
   const handleSubmit = (id) => {
     const entry = entries.find((e) => e.id === id);
+    const dateRegex = /^[\d\s\-/]+$/;
     if (
       entry &&
       entry.companyName.trim() &&
       entry.positionTitle.trim() &&
-      entry.dateOfEmployment.trim()
+      dateRegex.test(entry.dateOfEmployment)
     ) {
       setEntries(
         entries.map((entry) =>
@@ -90,7 +91,7 @@ function PracticalExperienceForm() {
               <label>
                 Date of Employment:{' '}
                 <input
-                  type="text"
+                  type="date"
                   value={entry.dateOfEmployment}
                   onChange={(e) =>
                     handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
