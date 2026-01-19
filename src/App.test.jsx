@@ -74,4 +74,14 @@ describe('App component', () => {
     expect(printSpy).toHaveBeenCalled();
     printSpy.mockRestore();
   });
+
+  it('applies a "printButton" class to the Print/Export button for styling', () => {
+    render(<App />);
+
+    const printButton = screen.getByRole('button', {
+      name: /print \/ export/i,
+    });
+
+    expect(printButton.className).toMatch(/printButton/);
+  });
 });
