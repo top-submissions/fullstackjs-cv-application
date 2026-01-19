@@ -175,4 +175,13 @@ describe('EducationalExperienceForm', () => {
     expect(screen.getByLabelText(/date of study/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('wraps form inputs in a container with "formContainer" class for styling', () => {
+    render(<EducationalExperienceForm />);
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    const container = schoolNameInput.closest('div');
+
+    expect(container.className).toMatch(/formContainer/);
+  });
 });
