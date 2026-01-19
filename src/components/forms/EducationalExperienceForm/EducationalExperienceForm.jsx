@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './EducationalExperienceForm.module.css';
 
 function EducationalExperienceForm() {
   const [entries, setEntries] = useState([
@@ -63,43 +64,45 @@ function EducationalExperienceForm() {
   };
 
   return (
-    <div>
+    <div className={styles.formSection}>
       <h2>Educational Experience</h2>
       {entries.map((entry) => (
         <div key={entry.id}>
           {!entry.isSubmitted ? (
             <>
-              <label>
-                School Name:{' '}
-                <input
-                  type="text"
-                  value={entry.schoolName}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'schoolName', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <label>
-                Title of Study:{' '}
-                <input
-                  type="text"
-                  value={entry.titleOfStudy}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'titleOfStudy', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <label>
-                Date of Study:{' '}
-                <input
-                  type="date"
-                  value={entry.dateOfStudy}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'dateOfStudy', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+              <div className={styles.formContainer}>
+                <label>
+                  School Name:{' '}
+                  <input
+                    type="text"
+                    value={entry.schoolName}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'schoolName', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <label>
+                  Title of Study:{' '}
+                  <input
+                    type="text"
+                    value={entry.titleOfStudy}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'titleOfStudy', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <label>
+                  Date of Study:{' '}
+                  <input
+                    type="date"
+                    value={entry.dateOfStudy}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'dateOfStudy', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+              </div>
               <div>
                 <p>{entry.schoolName}</p>
                 <p>{entry.titleOfStudy}</p>
