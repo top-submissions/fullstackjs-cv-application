@@ -50,3 +50,12 @@
     color: #888;
   }
 }
+
+@media (max-width: 600px) {
+  .appContainer {
+    padding: 1rem;
+  }
+  .headerTitle {
+    font-size: 2rem;
+  }
+}
