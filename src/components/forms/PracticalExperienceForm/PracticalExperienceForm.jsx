@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './PracticalExperienceForm.module.css';
 
 function PracticalExperienceForm() {
   const [entries, setEntries] = useState([
@@ -62,43 +63,45 @@ function PracticalExperienceForm() {
   };
 
   return (
-    <div>
+    <div className={styles.formSection}>
       <h2>Practical Experience</h2>
       {entries.map((entry) => (
         <div key={entry.id}>
           {!entry.isSubmitted ? (
             <>
-              <label>
-                Company Name:{' '}
-                <input
-                  type="text"
-                  value={entry.companyName}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'companyName', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <label>
-                Position Title:{' '}
-                <input
-                  type="text"
-                  value={entry.positionTitle}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'positionTitle', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <label>
-                Date of Employment:{' '}
-                <input
-                  type="date"
-                  value={entry.dateOfEmployment}
-                  onChange={(e) =>
-                    handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
-                  }
-                />{' '}
-              </label>
-              <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+              <div className={styles.formContainer}>
+                <label>
+                  Company Name:{' '}
+                  <input
+                    type="text"
+                    value={entry.companyName}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'companyName', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <label>
+                  Position Title:{' '}
+                  <input
+                    type="text"
+                    value={entry.positionTitle}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'positionTitle', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <label>
+                  Date of Employment:{' '}
+                  <input
+                    type="date"
+                    value={entry.dateOfEmployment}
+                    onChange={(e) =>
+                      handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
+                    }
+                  />{' '}
+                </label>
+                <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+              </div>
               <div>
                 <p>{entry.companyName}</p>
                 <p>{entry.positionTitle}</p>
