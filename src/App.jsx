@@ -7,7 +7,7 @@ import PracticalExperienceForm from './components/forms/PracticalExperienceForm/
 function App() {
   return (
     <div className={styles.appContainer}>
-      <h1>CV Application</h1>
+      <h1 className={styles.headerTitle}>CV Application</h1>
       <GeneralInformationForm />
       <EducationalExperienceForm />
       <PracticalExperienceForm />
