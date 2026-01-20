@@ -1,4 +1,5 @@
 import React from 'react';
+// import '../../styles/index.css';
 import styles from './App.module.css';
 import GeneralInformationForm from '../../components/forms/GeneralInformationForm/GeneralInformationForm';
 import EducationalExperienceForm from '../../components/forms/EducationalExperienceForm/EducationalExperienceForm';
