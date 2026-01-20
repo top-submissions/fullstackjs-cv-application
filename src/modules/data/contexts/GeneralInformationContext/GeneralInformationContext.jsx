@@ -1,13 +1,19 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
-const GeneralInformationContext = createContext();
+const initialGeneralInformation = {
+  name: '',
+  email: '',
+  phone: '',
+};
+
+export const GeneralInformationContext = createContext(
+  initialGeneralInformation,
+);
 
 export const GeneralInformationProvider = ({ children }) => {
-  const [generalInformation, setGeneralInformation] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+  const [generalInformation, setGeneralInformation] = useState(
+    initialGeneralInformation,
+  );
 
   const updateGeneralInformation = (newData) => {
     setGeneralInformation(newData);
@@ -23,16 +29,4 @@ export const GeneralInformationProvider = ({ children }) => {
       {children}
     </GeneralInformationContext.Provider>
   );
-};
-
-export const useGeneralInformation = () => {
-  const context = useContext(GeneralInformationContext);
-
-  if (context === undefined) {
-    throw new Error(
-      'useGeneralInformation must be used within a GeneralInformationProvider',
-    );
-  }
-
-  return context;
 };
