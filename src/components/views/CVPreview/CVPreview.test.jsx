@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import CVPreview from './CVPreview';
 import React from 'react';
-import { GeneralInformationProvider } from '../../providers/GeneralInformationProvider/GeneralInformationProvider';
+import GeneralInformationProvider from '../../providers/GeneralInformationProvider/GeneralInformationProvider';
 
 describe('CVPreview', () => {
   it('renders the General Information section header', () => {
