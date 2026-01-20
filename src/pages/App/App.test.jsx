@@ -54,7 +54,11 @@ describe('App component', () => {
   });
 
   it('includes a responsive design media query in the CSS module', () => {
-    const cssPath = path.join(process.cwd(), 'src', 'App.module.css');
+    const cssPath = path.join(
+      process.cwd(),
+      'src/pages/App/',
+      'App.module.css',
+    );
     const cssContent = fs.readFileSync(cssPath, 'utf-8');
 
     expect(cssContent).toMatch(/@media\s*\(max-width/);
@@ -86,7 +90,11 @@ describe('App component', () => {
   });
 
   it('includes a print media query to hide buttons', () => {
-    const cssPath = path.join(process.cwd(), 'src', 'App.module.css');
+    const cssPath = path.join(
+      process.cwd(),
+      'src/pages/App/',
+      'App.module.css',
+    );
     const cssContent = fs.readFileSync(cssPath, 'utf-8');
 
     expect(cssContent).toMatch(/@media\s*print/);
