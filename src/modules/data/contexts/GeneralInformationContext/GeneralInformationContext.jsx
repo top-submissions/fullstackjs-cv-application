@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from 'react';
-import PropTypes from 'prop-types';
 
 const GeneralInformationContext = createContext();
 
@@ -24,11 +23,6 @@ export const GeneralInformationProvider = ({ children }) => {
       {children}
     </GeneralInformationContext.Provider>
   );
-};
-
-GeneralInformationProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-  initialData: PropTypes.object,
 };
 
 export const useGeneralInformation = () => {
