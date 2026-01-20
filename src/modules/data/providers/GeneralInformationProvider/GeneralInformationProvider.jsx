@@ -1,14 +1,5 @@
-import { createContext, useState } from 'react';
-
-const initialGeneralInformation = {
-  name: '',
-  email: '',
-  phone: '',
-};
-
-export const GeneralInformationContext = createContext(
-  initialGeneralInformation,
-);
+import { useState } from 'react';
+import initialGeneralInformation from '../../FormPlaceholders/generalInformationPlaceholders.js';
 
 export const GeneralInformationProvider = ({ children }) => {
   const [generalInformation, setGeneralInformation] = useState(
