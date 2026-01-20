@@ -18,21 +18,21 @@ describe('App component', () => {
   it('renders the General Information form section', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: /general information/i }),
+      screen.getAllByRole('heading', { name: /general information/i })[0],
     ).toBeInTheDocument();
   });
 
   it('renders the Educational Experience form section', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: /educational experience/i }),
+      screen.getAllByRole('heading', { name: /educational experience/i })[0],
     ).toBeInTheDocument();
   });
 
   it('renders the Practical Experience section', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: /practical experience/i }),
+      screen.getAllByRole('heading', { name: /practical experience/i })[0],
     ).toBeInTheDocument();
   });
 
@@ -91,5 +91,15 @@ describe('App component', () => {
 
     expect(cssContent).toMatch(/@media\s*print/);
     expect(cssContent).toMatch(/display:\s*none/);
+  });
+
+  it('renders the CVPreview component alongside the forms', () => {
+    render(<App />);
+
+    const headings = screen.getAllByRole('heading', {
+      name: /General Information/i,
+    });
+
+    expect(headings.length).toBeGreaterThan(1);
   });
 });
