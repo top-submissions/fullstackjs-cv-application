@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 
 const GeneralInformationContext = createContext();
 
-export const GeneralInformationProvider = ({ children, initialData }) => {
-  const [generalInformation, setGeneralInformation] = useState(initialData);
+export const GeneralInformationProvider = ({ children }) => {
+  const [generalInformation, setGeneralInformation] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  });
+
+  const updateGeneralInformation = (newData) => {
+    setGeneralInformation(newData);
+  };
 
   const values = {
     generalInformation,
-    setGeneralInformation,
+    updateGeneralInformation,
   };
 
   return (
