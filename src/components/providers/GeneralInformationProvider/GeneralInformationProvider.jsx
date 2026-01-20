@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import initialGeneralInformation from '../../../modules/data/FormPlaceholders/generalInformationPlaceholders.js';
+import { initialGeneralInformation } from '../../../modules/data/FormPlaceholders/generalInformationPlaceholders.js';
 import GeneralInformationContext from '../../../modules/data/contexts/GeneralInformationContext.jsx';
 
 const GeneralInformationProvider = ({ children }) => {
