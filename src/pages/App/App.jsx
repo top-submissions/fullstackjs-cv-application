@@ -5,7 +5,7 @@ import GeneralInformationForm from '../../components/forms/GeneralInformationFor
 import EducationalExperienceForm from '../../components/forms/EducationalExperienceForm/EducationalExperienceForm';
 import PracticalExperienceForm from '../../components/forms/PracticalExperienceForm/PracticalExperienceForm';
 import CVPreview from '../../components/views/CVPreview/CVPreview';
-import { GeneralInformationProvider } from '../../components/providers/GeneralInformationProvider/GeneralInformationProvider';
+import GeneralInformationProvider from '../../components/providers/GeneralInformationProvider/GeneralInformationProvider';
 
 function App() {
   return (

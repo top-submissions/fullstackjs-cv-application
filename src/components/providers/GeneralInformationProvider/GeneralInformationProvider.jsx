@@ -2,7 +2,7 @@ import { useState } from 'react';
 import initialGeneralInformation from '../../../modules/data/FormPlaceholders/generalInformationPlaceholders.js';
 import GeneralInformationContext from '../../../modules/data/contexts/GeneralInformationContext.jsx';
 
-export const GeneralInformationProvider = ({ children }) => {
+const GeneralInformationProvider = ({ children }) => {
   const [generalInformation, setGeneralInformation] = useState(
     initialGeneralInformation,
   );
@@ -22,3 +22,5 @@ export const GeneralInformationProvider = ({ children }) => {
     </GeneralInformationContext.Provider>
   );
 };
+
+export default GeneralInformationProvider;

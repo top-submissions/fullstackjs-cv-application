@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CVPreview.module.css';
 import { useContext } from 'react';
-import { GeneralInformationContext } from '../../../modules/data/contexts/GeneralInformationContext';
+import GeneralInformationContext from '../../../modules/data/contexts/GeneralInformationContext';
 
 const CVPreview = () => {
   const { generalInformation } = useContext(GeneralInformationContext);
