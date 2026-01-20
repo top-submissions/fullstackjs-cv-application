@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './App.module.css';
-import GeneralInformationForm from './components/forms/GeneralInformationForm/GeneralInformationForm';
-import EducationalExperienceForm from './components/forms/EducationalExperienceForm/EducationalExperienceForm';
-import PracticalExperienceForm from './components/forms/PracticalExperienceForm/PracticalExperienceForm';
-import CVPreview from './components/views/CVPreview/CVPreview';
+import GeneralInformationForm from '../../components/forms/GeneralInformationForm/GeneralInformationForm';
+import EducationalExperienceForm from '../../components/forms/EducationalExperienceForm/EducationalExperienceForm';
+import PracticalExperienceForm from '../../components/forms/PracticalExperienceForm/PracticalExperienceForm';
+import CVPreview from '../../components/views/CVPreview/CVPreview';
 
 function App() {
   return (
