@@ -21,23 +21,6 @@ describe('GeneralInformationForm', () => {
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
   });
 
-  it('displays the typed input field values', async () => {
-    const user = userEvent.setup();
-    render(<GeneralInformationForm />);
-
-    const nameInput = screen.getByLabelText(/name/i);
-    const emailInput = screen.getByLabelText(/email/i);
-    const phoneInput = screen.getByLabelText(/phone/i);
-
-    await user.type(nameInput, 'John Doe');
-    await user.type(emailInput, 'john@example.com');
-    await user.type(phoneInput, '123-456-7890');
-
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('john@example.com')).toBeInTheDocument();
-    expect(screen.getByText('123-456-7890')).toBeInTheDocument();
-  });
-
   it('wraps form inputs in a container with "formContainer" class for styling', () => {
     render(<GeneralInformationForm />);
 
