@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styles from './EducationalExperienceForm.module.css';
 import EducationalExperienceContext from '../../../modules/data/contexts/EducationalExperienceContext';
 
@@ -7,29 +7,33 @@ function EducationalExperienceForm() {
     EducationalExperienceContext,
   );
 
+  const [localEntries, setLocalEntries] = useState(educationalExperience);
+
+  useEffect(() => {
+    setLocalEntries(educationalExperience);
+  }, [educationalExperience]);
+
   const handleAdd = () => {
-    updateEducationalExperience([
-      ...educationalExperience,
-      {
-        id: Date.now() + Math.random(),
-        schoolName: '',
-        titleOfStudy: '',
-        dateOfStudy: '',
-        isSubmitted: false,
-      },
-    ]);
+    const newEntry = {
+      id: crypto.randomUUID(),
+      schoolName: '',
+      titleOfStudy: '',
+      dateOfStudy: '',
+      isSubmitted: false,
+    };
+    updateEducationalExperience([...educationalExperience, newEntry]);
   };
 
   const handleUpdate = (id, field, value) => {
-    updateEducationalExperience(
-      educationalExperience.map((entry) =>
+    setLocalEntries(
+      localEntries.map((entry) =>
         entry.id === id ? { ...entry, [field]: value } : entry,
       ),
     );
   };
 
   const handleSubmit = (id) => {
-    const entry = educationalExperience.find((e) => e.id === id);
+    const entry = localEntries.find((e) => e.id === id);
     const dateRegex = /^[\d\s\-/]+$/;
     if (
       entry &&
@@ -39,8 +43,10 @@ function EducationalExperienceForm() {
       dateRegex.test(entry.dateOfStudy)
     ) {
       updateEducationalExperience(
-        educationalExperience.map((entry) =>
-          entry.id === id ? { ...entry, isSubmitted: true } : entry,
+        educationalExperience.map((contextEntry) =>
+          contextEntry.id === id
+            ? { ...entry, isSubmitted: true }
+            : contextEntry,
         ),
       );
     }
@@ -73,7 +79,7 @@ function EducationalExperienceForm() {
           </tr>
         </thead>
         <tbody>
-          {educationalExperience.map((entry) => (
+          {localEntries.map((entry) => (
             <tr key={entry.id}>
               {!entry.isSubmitted ? (
                 <>
