@@ -28,7 +28,7 @@
   border-radius: 4px;
 }
 
-.formContainer button {
+.submitButton {
   align-self: flex-start;
   padding: 8px 16px;
   background-color: #2563eb;
@@ -38,7 +38,7 @@
   cursor: pointer;
 }
 
-.formContainer button:hover {
+.submitButton:hover {
   background-color: #1d4ed8;
 }
 
