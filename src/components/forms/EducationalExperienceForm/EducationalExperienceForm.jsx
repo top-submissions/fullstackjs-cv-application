@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react'; // MODIFIED: Added useContext import
 import styles from './EducationalExperienceForm.module.css';
+import EducationalExperienceContext from '../../../modules/data/contexts/EducationalExperienceContext'; // ADDED: Import context
 
 function EducationalExperienceForm() {
-  const [entries, setEntries] = useState([
-    {
-      id: 1,
-      schoolName: '',
-      titleOfStudy: '',
-      dateOfStudy: '',
-      isSubmitted: false,
-    },
-  ]);
+  const { educationalExperience, updateEducationalExperience } = useContext(
+    EducationalExperienceContext,
+  );
 
   const handleAdd = () => {
-    setEntries([
-      ...entries,
+    updateEducationalExperience([
+      ...educationalExperience,
       {
         id: Date.now() + Math.random(),
         schoolName: '',
@@ -26,15 +21,15 @@ function EducationalExperienceForm() {
   };
 
   const handleUpdate = (id, field, value) => {
-    setEntries(
-      entries.map((entry) =>
+    updateEducationalExperience(
+      educationalExperience.map((entry) =>
         entry.id === id ? { ...entry, [field]: value } : entry,
       ),
     );
   };
 
   const handleSubmit = (id) => {
-    const entry = entries.find((e) => e.id === id);
+    const entry = educationalExperience.find((e) => e.id === id);
     const dateRegex = /^[\d\s\-/]+$/;
     if (
       entry &&
@@ -43,8 +38,8 @@ function EducationalExperienceForm() {
       entry.dateOfStudy.trim() &&
       dateRegex.test(entry.dateOfStudy)
     ) {
-      setEntries(
-        entries.map((entry) =>
+      updateEducationalExperience(
+        educationalExperience.map((entry) =>
           entry.id === id ? { ...entry, isSubmitted: true } : entry,
         ),
       );
@@ -52,21 +47,23 @@ function EducationalExperienceForm() {
   };
 
   const handleEdit = (id) => {
-    setEntries(
-      entries.map((entry) =>
+    updateEducationalExperience(
+      educationalExperience.map((entry) =>
         entry.id === id ? { ...entry, isSubmitted: false } : entry,
       ),
     );
   };
 
   const handleDelete = (id) => {
-    setEntries(entries.filter((entry) => entry.id !== id));
+    updateEducationalExperience(
+      educationalExperience.filter((entry) => entry.id !== id),
+    );
   };
 
   return (
     <div className={styles.formSection}>
       <h2>Educational Experience</h2>
-      {entries.map((entry) => (
+      {educationalExperience.map((entry) => (
         <div key={entry.id}>
           {!entry.isSubmitted ? (
             <>
