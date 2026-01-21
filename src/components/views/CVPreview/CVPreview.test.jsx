@@ -8,7 +8,9 @@ describe('CVPreview', () => {
   it('renders the General Information section header', () => {
     render(
       <GeneralInformationProvider>
-        <CVPreview />
+        <EducationalExperienceProvider>
+          <CVPreview />
+        </EducationalExperienceProvider>
       </GeneralInformationProvider>,
     );
 
@@ -18,7 +20,9 @@ describe('CVPreview', () => {
   it('renders the Educational Experience section header', () => {
     render(
       <GeneralInformationProvider>
-        <CVPreview />
+        <EducationalExperienceProvider>
+          <CVPreview />
+        </EducationalExperienceProvider>
       </GeneralInformationProvider>,
     );
 
@@ -28,7 +32,9 @@ describe('CVPreview', () => {
   it('renders the Practical Experience section header', () => {
     render(
       <GeneralInformationProvider>
-        <CVPreview />
+        <EducationalExperienceProvider>
+          <CVPreview />
+        </EducationalExperienceProvider>
       </GeneralInformationProvider>,
     );
 
