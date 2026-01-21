@@ -100,11 +100,6 @@ function EducationalExperienceForm() {
                 </label>
                 <button onClick={() => handleSubmit(entry.id)}>Submit</button>
               </div>
-              <div>
-                <p>{entry.schoolName}</p>
-                <p>{entry.titleOfStudy}</p>
-                <p>{entry.dateOfStudy}</p>
-              </div>
             </>
           ) : (
             <div>
