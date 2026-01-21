@@ -6,22 +6,25 @@ import EducationalExperienceForm from '../../components/forms/EducationalExperie
 import PracticalExperienceForm from '../../components/forms/PracticalExperienceForm/PracticalExperienceForm';
 import CVPreview from '../../components/views/CVPreview/CVPreview';
 import GeneralInformationProvider from '../../components/providers/GeneralInformationProvider/GeneralInformationProvider';
+import EducationalExperienceProvider from '../../components/providers/EducationalExperienceProvider/EducationalExperienceProvider';
 
 function App() {
   return (
     <div className={styles.appContainer}>
       <h1 className={styles.headerTitle}>CV Application</h1>
       <GeneralInformationProvider>
-        <div className={styles.mainContent}>
-          <div className={styles.formSide}>
-            <GeneralInformationForm />
-            <EducationalExperienceForm />
-            <PracticalExperienceForm />
+        <EducationalExperienceProvider>
+          <div className={styles.mainContent}>
+            <div className={styles.formSide}>
+              <GeneralInformationForm />
+              <EducationalExperienceForm />
+              <PracticalExperienceForm />
+            </div>
+            <div className={styles.previewSide}>
+              <CVPreview />
+            </div>
           </div>
-          <div className={styles.previewSide}>
-            <CVPreview />
-          </div>
-        </div>
+        </EducationalExperienceProvider>
       </GeneralInformationProvider>
       <button className={styles.printButton} onClick={() => window.print()}>
         Print / Export
