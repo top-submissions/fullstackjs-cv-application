@@ -8,21 +8,35 @@ import CVPreview from '../../views/CVPreview/CVPreview'; // ADDED: Import CVPrev
 
 describe('GeneralInformationForm', () => {
   it('renders the form header', () => {
-    render(<GeneralInformationForm />);
+    render(
+      <GeneralInformationProvider>
+        <GeneralInformationForm />
+      </GeneralInformationProvider>,
+    );
+
     expect(
       screen.getByRole('heading', { name: /general information/i }),
     ).toBeInTheDocument();
   });
 
   it('renders input fields for Name, Email, and Phone', () => {
-    render(<GeneralInformationForm />);
+    render(
+      <GeneralInformationProvider>
+        <GeneralInformationForm />
+      </GeneralInformationProvider>,
+    );
+
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
   });
 
   it('wraps form inputs in a container with "formContainer" class for styling', () => {
-    render(<GeneralInformationForm />);
+    render(
+      <GeneralInformationProvider>
+        <GeneralInformationForm />
+      </GeneralInformationProvider>,
+    );
 
     const nameInput = screen.getByLabelText(/name/i);
     const container = nameInput.closest('div');
