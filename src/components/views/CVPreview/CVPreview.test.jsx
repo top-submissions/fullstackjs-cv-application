@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import CVPreview from './CVPreview';
 import React from 'react';
 import GeneralInformationProvider from '../../providers/GeneralInformationProvider/GeneralInformationProvider';
+import EducationalExperienceProvider from '../../providers/EducationalExperienceProvider/EducationalExperienceProvider';
 
 describe('CVPreview', () => {
   it('renders the General Information section header', () => {
