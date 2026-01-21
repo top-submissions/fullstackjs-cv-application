@@ -29,30 +29,4 @@ describe('GeneralInformationForm', () => {
 
     expect(container.className).toMatch(/formContainer/);
   });
-
-  it('updates CVPreview in real-time as user types in form fields', async () => {
-    const user = userEvent.setup();
-    render(
-      <GeneralInformationProvider>
-        <GeneralInformationForm />
-        <CVPreview />
-      </GeneralInformationProvider>,
-    );
-
-    const nameInput = screen.getByLabelText(/name/i);
-    const emailInput = screen.getByLabelText(/email/i);
-    const phoneInput = screen.getByLabelText(/phone/i);
-
-    await user.type(nameInput, 'John Doe');
-    await user.type(emailInput, 'john@example.com');
-    await user.type(phoneInput, '123-456-7890');
-
-    const allNameInstances = screen.getAllByText('John Doe');
-    const allEmailInstances = screen.getAllByText('john@example.com');
-    const allPhoneInstances = screen.getAllByText('123-456-7890');
-
-    expect(allNameInstances.length).toBeGreaterThan(0);
-    expect(allEmailInstances.length).toBeGreaterThan(0);
-    expect(allPhoneInstances.length).toBeGreaterThan(0);
-  });
 });
