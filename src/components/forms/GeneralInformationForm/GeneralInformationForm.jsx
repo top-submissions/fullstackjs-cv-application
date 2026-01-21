@@ -1,76 +1,62 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './GeneralInformationForm.module.css';
+import GeneralInformationContext from '../../../modules/data/contexts/GeneralInformationContext'; // ADDED: Import context
 
 function GeneralInformationForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { generalInformation, updateGeneralInformation } = useContext(
+    GeneralInformationContext,
+  );
 
-  const handleSubmit = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[\d\s\-()]+$/;
-    if (
-      name.trim() &&
-      email.trim() &&
-      phone.trim() &&
-      emailRegex.test(email) &&
-      phoneRegex.test(phone)
-    ) {
-      setIsSubmitted(true);
-    }
+  const handleNameChange = (e) => {
+    updateGeneralInformation({
+      ...generalInformation,
+      name: e.target.value,
+    });
   };
 
-  const handleEdit = () => {
-    setIsSubmitted(false);
+  const handleEmailChange = (e) => {
+    updateGeneralInformation({
+      ...generalInformation,
+      email: e.target.value,
+    });
+  };
+
+  const handlePhoneChange = (e) => {
+    updateGeneralInformation({
+      ...generalInformation,
+      phone: e.target.value,
+    });
   };
 
   return (
     <div className={styles.formSection}>
       <h2>General Information</h2>
-      {!isSubmitted ? (
-        <>
-          <div className={styles.formContainer}>
-            <label>
-              Name:{' '}
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
-            <label>
-              Email:{' '}
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </label>
-            <label>
-              Phone:{' '}
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </label>
-            <button onClick={handleSubmit}>Submit</button>
-          </div>
-          <div>
-            <p>{name}</p>
-            <p>{email}</p>
-            <p>{phone}</p>
-          </div>
-        </>
-      ) : (
-        <div>
-          <p>{name}</p>
-          <p>{email}</p>
-          <p>{phone}</p>
-          <button onClick={handleEdit}>Edit</button>
-        </div>
-      )}
+      <div className={styles.formContainer}>
+        <label>
+          Name:{' '}
+          <input
+            type="text"
+            value={generalInformation.name}
+            onChange={handleNameChange}
+          />
+        </label>
+        <label>
+          Email:{' '}
+          <input
+            type="email"
+            value={generalInformation.email}
+            onChange={handleEmailChange}
+          />
+        </label>
+        <label>
+          Phone:{' '}
+          <input
+            type="tel"
+            value={generalInformation.phone}
+            onChange={handlePhoneChange}
+          />
+        </label>
+      </div>
     </div>
   );
 }
