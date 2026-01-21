@@ -41,8 +41,32 @@ describe('EducationalExperienceForm', () => {
     );
 
     const schoolNameInput = screen.getByLabelText(/school name/i);
-    const container = schoolNameInput.closest('div');
+    const container = schoolNameInput.closest('table');
 
     expect(container.className).toMatch(/formContainer/);
+  });
+
+  it('renders educational experience entries in a table format', () => {
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    const table = screen.getByRole('table');
+    expect(table).toBeInTheDocument();
+
+    const thead = table.querySelector('thead');
+    expect(thead).toBeInTheDocument();
+
+    expect(screen.getByText(/school name/i)).toBeInTheDocument();
+    expect(screen.getByText(/title of study/i)).toBeInTheDocument();
+    expect(screen.getByText(/date of study/i)).toBeInTheDocument();
+
+    const tbody = table.querySelector('tbody');
+    expect(tbody).toBeInTheDocument();
+
+    const rows = tbody.querySelectorAll('tr');
+    expect(rows.length).toBeGreaterThan(0);
   });
 });
