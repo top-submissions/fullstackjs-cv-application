@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'; // MODIFIED: Added useContext import
+import React, { useContext } from 'react';
 import styles from './EducationalExperienceForm.module.css';
-import EducationalExperienceContext from '../../../modules/data/contexts/EducationalExperienceContext'; // ADDED: Import context
+import EducationalExperienceContext from '../../../modules/data/contexts/EducationalExperienceContext';
 
 function EducationalExperienceForm() {
   const { educationalExperience, updateEducationalExperience } = useContext(
@@ -63,65 +63,84 @@ function EducationalExperienceForm() {
   return (
     <div className={styles.formSection}>
       <h2>Educational Experience</h2>
-      {educationalExperience.map((entry) => (
-        <div key={entry.id}>
-          {!entry.isSubmitted ? (
-            <>
-              <div className={styles.formContainer}>
-                <label>
-                  School Name:{' '}
-                  <input
-                    type="text"
-                    value={entry.schoolName}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'schoolName', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <label>
-                  Title of Study:{' '}
-                  <input
-                    type="text"
-                    value={entry.titleOfStudy}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'titleOfStudy', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <label>
-                  Date of Study:{' '}
-                  <input
-                    type="date"
-                    value={entry.dateOfStudy}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'dateOfStudy', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <button onClick={() => handleSubmit(entry.id)}>Submit</button>
-              </div>
-            </>
-          ) : (
-            <div>
-              <p>{entry.schoolName}</p>
-              <p>{entry.titleOfStudy}</p>
-              <p>{entry.dateOfStudy}</p>
-              <button
-                className={styles.editButton}
-                onClick={() => handleEdit(entry.id)}
-              >
-                Edit
-              </button>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDelete(entry.id)}
-              >
-                Delete
-              </button>{' '}
-            </div>
-          )}
-        </div>
-      ))}
+      <table className={styles.formContainer}>
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th>Title of Study</th>
+            <th>Date of Study</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {educationalExperience.map((entry) => (
+            <tr key={entry.id}>
+              {!entry.isSubmitted ? (
+                <>
+                  <td>
+                    <input
+                      type="text"
+                      value={entry.schoolName}
+                      onChange={(e) =>
+                        handleUpdate(entry.id, 'schoolName', e.target.value)
+                      }
+                      aria-label="School Name"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={entry.titleOfStudy}
+                      onChange={(e) =>
+                        handleUpdate(entry.id, 'titleOfStudy', e.target.value)
+                      }
+                      aria-label="Title of Study"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      value={entry.dateOfStudy}
+                      onChange={(e) =>
+                        handleUpdate(entry.id, 'dateOfStudy', e.target.value)
+                      }
+                      aria-label="Date of Study"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      className={styles.submitButton}
+                      onClick={() => handleSubmit(entry.id)}
+                    >
+                      Submit
+                    </button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{entry.schoolName}</td>
+                  <td>{entry.titleOfStudy}</td>
+                  <td>{entry.dateOfStudy}</td>
+                  <td>
+                    <button
+                      className={styles.editButton}
+                      onClick={() => handleEdit(entry.id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleDelete(entry.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <button className={styles.addButton} onClick={handleAdd}>
         Add
       </button>
