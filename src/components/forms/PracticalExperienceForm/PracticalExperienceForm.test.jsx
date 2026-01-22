@@ -3,17 +3,26 @@ import { describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import PracticalExperienceForm from './PracticalExperienceForm';
 import React from 'react';
+import PracticalExperienceProvider from '../../providers/PracticalExperienceProvider/PracticalExperienceProvider';
 
 describe('PracticalExperienceForm', () => {
   it('renders the form header', () => {
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
     expect(
       screen.getByRole('heading', { name: /practical experience/i }),
     ).toBeInTheDocument();
   });
 
   it('renders input fields for Company Name, Position Title, and Date of Employment', () => {
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
     expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
@@ -21,7 +30,11 @@ describe('PracticalExperienceForm', () => {
 
   it('displays the typed practical experience values', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     const positionInput = screen.getByLabelText(/position title/i);
@@ -31,14 +44,18 @@ describe('PracticalExperienceForm', () => {
     await user.type(positionInput, 'Software Engineer');
     await user.type(dateInput, '2020-10-01');
 
-    expect(screen.getByText('Google Inc.')).toBeInTheDocument();
-    expect(screen.getByText('Software Engineer')).toBeInTheDocument();
-    expect(screen.getByText('2020-10-01')).toBeInTheDocument();
+    expect(companyNameInput.value).toBe('Google Inc.');
+    expect(positionInput.value).toBe('Software Engineer');
+    expect(dateInput.value).toBe('2020-10-01');
   });
 
-  it('hides form inputs and shows only preview when Submit button is clicked', async () => {
+  it('keeps form inputs visible and shows submitted entries in table when Submit button is clicked', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     const positionInput = screen.getByLabelText(/position title/i);
@@ -51,11 +68,10 @@ describe('PracticalExperienceForm', () => {
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
-    expect(screen.queryByLabelText(/company name/i)).not.toBeInTheDocument();
-    expect(screen.queryByLabelText(/position title/i)).not.toBeInTheDocument();
-    expect(
-      screen.queryByLabelText(/date of employment/i),
-    ).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
+
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
     expect(screen.getByText('Software Engineer')).toBeInTheDocument();
     expect(screen.getByText('2020-10-01')).toBeInTheDocument();
@@ -63,7 +79,11 @@ describe('PracticalExperienceForm', () => {
 
   it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
@@ -78,15 +98,24 @@ describe('PracticalExperienceForm', () => {
     const editButton = screen.getByRole('button', { name: /edit/i });
     await user.click(editButton);
 
-    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+    const companyNameInputs = screen.getAllByLabelText(/company name/i);
+    const positionInputs = screen.getAllByLabelText(/position title/i);
+    const dateInputs = screen.getAllByLabelText(/date of employment/i);
+
+    expect(companyNameInputs.length).toBeGreaterThan(0);
+    expect(positionInputs.length).toBeGreaterThan(0);
+    expect(dateInputs.length).toBeGreaterThan(0);
+    const submitButtons = screen.getAllByRole('button', { name: /submit/i });
+    expect(submitButtons.length).toBeGreaterThan(0);
   });
 
   it('allows adding multiple practical experience entries', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
@@ -100,18 +129,25 @@ describe('PracticalExperienceForm', () => {
     const addButton = screen.getByRole('button', { name: /add/i });
     await user.click(addButton);
 
-    expect(screen.getByLabelText(/company name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/position title/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/date of employment/i)).toBeInTheDocument();
+    const companyNameInputs = screen.getAllByLabelText(/company name/i);
+    const positionInputs = screen.getAllByLabelText(/position title/i);
+    const dateInputs = screen.getAllByLabelText(/date of employment/i);
+
+    expect(companyNameInputs.length).toBeGreaterThan(1);
+    expect(positionInputs.length).toBeGreaterThan(1);
+    expect(dateInputs.length).toBeGreaterThan(1);
 
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
   });
 
   it('allows deleting individual practical experience entries', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
-    // Create and submit first entry
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
     const positionInput = screen.getByLabelText(/position title/i);
@@ -121,17 +157,17 @@ describe('PracticalExperienceForm', () => {
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
-    // Create and submit second entry
     const addButton = screen.getByRole('button', { name: /add/i });
     await user.click(addButton);
-    const companyNameInput2 = screen.getByLabelText(/company name/i);
-    await user.type(companyNameInput2, 'Microsoft');
-    const positionInput2 = screen.getByLabelText(/position title/i);
-    await user.type(positionInput2, 'Senior Engineer');
-    const dateInput2 = screen.getByLabelText(/date of employment/i);
-    await user.type(dateInput2, '2023-01-01');
-    const submitButton2 = screen.getByRole('button', { name: /submit/i });
-    await user.click(submitButton2);
+    const companyNameInputs = screen.getAllByLabelText(/company name/i);
+    const positionInputs = screen.getAllByLabelText(/position title/i);
+    const dateInputs = screen.getAllByLabelText(/date of employment/i);
+    const submitButtons = screen.getAllByRole('button', { name: /submit/i });
+
+    await user.type(companyNameInputs[1], 'Microsoft');
+    await user.type(positionInputs[1], 'Senior Engineer');
+    await user.type(dateInputs[1], '2023-01-01');
+    await user.click(submitButtons[1]);
 
     // Verify both entries exist
     expect(screen.getByText('Google Inc.')).toBeInTheDocument();
@@ -148,7 +184,11 @@ describe('PracticalExperienceForm', () => {
 
   it('prevents submission when required fields are empty', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -161,7 +201,11 @@ describe('PracticalExperienceForm', () => {
 
   it('prevents submission when date format is invalid', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     await user.type(companyNameInput, 'Google Inc.');
@@ -178,7 +222,11 @@ describe('PracticalExperienceForm', () => {
   });
 
   it('wraps form inputs in a container with "formContainer" class for styling', () => {
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const companyNameInput = screen.getByLabelText(/company name/i);
     const container = companyNameInput.closest('div');
@@ -188,7 +236,11 @@ describe('PracticalExperienceForm', () => {
 
   it('applies specific styling classes to action buttons (Add, Edit, Delete)', async () => {
     const user = userEvent.setup();
-    render(<PracticalExperienceForm />);
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
 
     const addButton = screen.getByRole('button', { name: /add/i });
     expect(addButton.className).toMatch(/addButton/);
@@ -208,5 +260,44 @@ describe('PracticalExperienceForm', () => {
 
     expect(editButton.className).toMatch(/editButton/);
     expect(deleteButton.className).toMatch(/deleteButton/);
+  });
+
+  it('renders submitted practical experience entries in a table format', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    const positionInput = screen.getByLabelText(/position title/i);
+    const dateInput = screen.getByLabelText(/date of employment/i);
+
+    await user.type(companyNameInput, 'Google Inc.');
+    await user.type(positionInput, 'Software Engineer');
+    await user.type(dateInput, '2020-10-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const tables = container.querySelectorAll('table');
+    expect(tables.length).toBeGreaterThan(0);
+
+    const table = tables[tables.length - 1];
+    const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
+
+    expect(thead).toBeInTheDocument();
+    expect(tbody).toBeInTheDocument();
+
+    const submittedTable = tables[tables.length - 1];
+    const headers = submittedTable.querySelectorAll('th');
+    expect(headers[0]).toHaveTextContent(/company name/i);
+    expect(headers[1]).toHaveTextContent(/position title/i);
+    expect(headers[2]).toHaveTextContent(/date of employment/i);
+
+    const rows = tbody.querySelectorAll('tr');
+    expect(rows.length).toBeGreaterThan(0);
   });
 });
