@@ -77,7 +77,7 @@ describe('PracticalExperienceForm', () => {
     expect(screen.getByText('2020-10-01')).toBeInTheDocument();
   });
 
-  it('shows Edit button in preview mode that returns to form inputs when clicked', async () => {
+  it('shows Edit button in preview mode that loads data into form when clicked', async () => {
     const user = userEvent.setup();
     render(
       <PracticalExperienceProvider>
@@ -95,18 +95,30 @@ describe('PracticalExperienceForm', () => {
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
 
+    const newCompanyInput = screen.getByLabelText(/company name/i);
+    const newPositionInput = screen.getByLabelText(/position title/i);
+    const newDateInput = screen.getByLabelText(/date of employment/i);
+
+    await user.clear(newCompanyInput);
+    await user.clear(newPositionInput);
+    await user.clear(newDateInput);
+
+    await user.type(newCompanyInput, 'Microsoft');
+    await user.type(newPositionInput, 'Senior Engineer');
+
     const editButton = screen.getByRole('button', { name: /edit/i });
     await user.click(editButton);
 
-    const companyNameInputs = screen.getAllByLabelText(/company name/i);
-    const positionInputs = screen.getAllByLabelText(/position title/i);
-    const dateInputs = screen.getAllByLabelText(/date of employment/i);
+    const companyInputAfterEdit = screen.getByLabelText(/company name/i);
+    const positionInputAfterEdit = screen.getByLabelText(/position title/i);
+    const dateInputAfterEdit = screen.getByLabelText(/date of employment/i);
 
-    expect(companyNameInputs.length).toBeGreaterThan(0);
-    expect(positionInputs.length).toBeGreaterThan(0);
-    expect(dateInputs.length).toBeGreaterThan(0);
-    const submitButtons = screen.getAllByRole('button', { name: /submit/i });
-    expect(submitButtons.length).toBeGreaterThan(0);
+    expect(companyInputAfterEdit.value).toBe('Google Inc.');
+    expect(positionInputAfterEdit.value).toBe('Software Engineer');
+    expect(dateInputAfterEdit.value).toBe('2020-10-01');
+
+    const allCompanyInputs = screen.getAllByLabelText(/company name/i);
+    expect(allCompanyInputs.length).toBe(1);
   });
 
   it('allows adding multiple practical experience entries', async () => {
@@ -300,4 +312,4 @@ describe('PracticalExperienceForm', () => {
     const rows = tbody.querySelectorAll('tr');
     expect(rows.length).toBeGreaterThan(0);
   });
-});
+};);
