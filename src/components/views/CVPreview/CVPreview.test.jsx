@@ -71,7 +71,7 @@ describe('CVPreview', () => {
     expect(allPhoneInstances.length).toBeGreaterThan(0);
   });
 
-  it('updates in real-time as user types in Educational Experience form fields', async () => {
+  it('updates after submitting Educational Experience form fields', async () => {
     const user = userEvent.setup();
     render(
       <EducationalExperienceProvider>
@@ -87,6 +87,9 @@ describe('CVPreview', () => {
     await user.type(schoolNameInput, 'Harvard University');
     await user.type(titleInput, 'Computer Science');
     await user.type(dateInput, '2020-01-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
 
     const allSchoolInstances = screen.getAllByText('Harvard University');
     const allTitleInstances = screen.getAllByText('Computer Science');
