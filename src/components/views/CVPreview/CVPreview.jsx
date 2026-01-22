@@ -3,10 +3,12 @@ import styles from './CVPreview.module.css';
 import { useContext } from 'react';
 import GeneralInformationContext from '../../../modules/data/contexts/GeneralInformationContext';
 import EducationalExperienceContext from '../../../modules/data/contexts/EducationalExperienceContext';
+import PracticalExperienceContext from '../../../modules/data/contexts/PracticalExperienceContext';
 
 const CVPreview = () => {
   const { generalInformation } = useContext(GeneralInformationContext);
   const { educationalExperience } = useContext(EducationalExperienceContext);
+  const { practicalExperience } = useContext(PracticalExperienceContext);
 
   return (
     <div className={styles.previewContainer}>
@@ -23,6 +25,13 @@ const CVPreview = () => {
         </div>
       ))}
       <h2>Practical Experience</h2>
+      {practicalExperience.map((entry) => (
+        <div key={entry.id}>
+          <p>{entry.companyName}</p>
+          <p>{entry.positionTitle}</p>
+          <p>{entry.dateOfEmployment}</p>
+        </div>
+      ))}
     </div>
   );
 };
