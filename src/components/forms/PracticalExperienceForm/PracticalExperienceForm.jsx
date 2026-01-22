@@ -41,13 +41,20 @@ function PracticalExperienceForm() {
       entry.positionTitle.trim() &&
       dateRegex.test(entry.dateOfEmployment)
     ) {
-      updatePracticalExperience(
-        practicalExperience.map((contextEntry) =>
+      updatePracticalExperience([
+        ...practicalExperience.map((contextEntry) =>
           contextEntry.id === id
             ? { ...entry, isSubmitted: true }
             : contextEntry,
         ),
-      );
+        {
+          id: crypto.randomUUID(),
+          companyName: '',
+          positionTitle: '',
+          dateOfEmployment: '',
+          isSubmitted: false,
+        },
+      ]);
     }
   };
 
@@ -65,73 +72,84 @@ function PracticalExperienceForm() {
     );
   };
 
+  const submittedEntries = entries.filter((entry) => entry.isSubmitted);
+  const unsubmittedEntries = entries.filter((entry) => !entry.isSubmitted);
+
   return (
     <div className={styles.formSection}>
       <h2>Practical Experience</h2>
-      {entries.map((entry) => (
+      {unsubmittedEntries.map((entry) => (
         <div key={entry.id}>
-          {!entry.isSubmitted ? (
-            <>
-              <div className={styles.formContainer}>
-                <label>
-                  Company Name:{' '}
-                  <input
-                    type="text"
-                    value={entry.companyName}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'companyName', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <label>
-                  Position Title:{' '}
-                  <input
-                    type="text"
-                    value={entry.positionTitle}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'positionTitle', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <label>
-                  Date of Employment:{' '}
-                  <input
-                    type="date"
-                    value={entry.dateOfEmployment}
-                    onChange={(e) =>
-                      handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
-                    }
-                  />{' '}
-                </label>
-                <button onClick={() => handleSubmit(entry.id)}>Submit</button>
-              </div>
-              <div>
-                <p>{entry.companyName}</p>
-                <p>{entry.positionTitle}</p>
-                <p>{entry.dateOfEmployment}</p>
-              </div>
-            </>
-          ) : (
-            <div>
-              <p>{entry.companyName}</p>
-              <p>{entry.positionTitle}</p>
-              <p>{entry.dateOfEmployment}</p>
-              <button
-                className={styles.editButton}
-                onClick={() => handleEdit(entry.id)}
-              >
-                Edit
-              </button>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDelete(entry.id)}
-              >
-                Delete
-              </button>{' '}
-            </div>
-          )}
+          <div className={styles.formContainer}>
+            <label>
+              Company Name:{' '}
+              <input
+                type="text"
+                value={entry.companyName}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'companyName', e.target.value)
+                }
+              />{' '}
+            </label>
+            <label>
+              Position Title:{' '}
+              <input
+                type="text"
+                value={entry.positionTitle}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'positionTitle', e.target.value)
+                }
+              />{' '}
+            </label>
+            <label>
+              Date of Employment:{' '}
+              <input
+                type="date"
+                value={entry.dateOfEmployment}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'dateOfEmployment', e.target.value)
+                }
+              />{' '}
+            </label>
+            <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+          </div>
         </div>
       ))}
+      {submittedEntries.length > 0 && (
+        <table className={styles.submittedEntriesTable}>
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Position Title</th>
+              <th>Date of Employment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {submittedEntries.map((entry) => (
+              <tr key={entry.id}>
+                <td>{entry.companyName}</td>
+                <td>{entry.positionTitle}</td>
+                <td>{entry.dateOfEmployment}</td>
+                <td>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleEdit(entry.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDelete(entry.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <button className={styles.addButton} onClick={handleAdd}>
         Add
       </button>
