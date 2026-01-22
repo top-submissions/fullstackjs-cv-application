@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styles from './PracticalExperienceForm.module.css';
+import PracticalExperienceContext from '../../../modules/data/contexts/PracticalExperienceContext';
 
 function PracticalExperienceForm() {
-  const [entries, setEntries] = useState([
-    {
+  const { practicalExperience, updatePracticalExperience } = useContext(
+    PracticalExperienceContext,
+  );
+
+  const [entries, setEntries] = useState(practicalExperience);
+
+  useEffect(() => {
+    setEntries(practicalExperience);
+  }, [practicalExperience]);
+
+  const handleAdd = () => {
+    const newEntry = {
       id: crypto.randomUUID(),
       companyName: '',
       positionTitle: '',
       dateOfEmployment: '',
       isSubmitted: false,
-    },
-  ]);
-
-  const handleAdd = () => {
-    setEntries([
-      ...entries,
-      {
-        id: crypto.randomUUID(),
-        companyName: '',
-        positionTitle: '',
-        dateOfEmployment: '',
-        isSubmitted: false,
-      },
-    ]);
+    };
+    updatePracticalExperience([...practicalExperience, newEntry]);
   };
 
   const handleUpdate = (id, field, value) => {
@@ -42,24 +41,28 @@ function PracticalExperienceForm() {
       entry.positionTitle.trim() &&
       dateRegex.test(entry.dateOfEmployment)
     ) {
-      setEntries(
-        entries.map((entry) =>
-          entry.id === id ? { ...entry, isSubmitted: true } : entry,
+      updatePracticalExperience(
+        practicalExperience.map((contextEntry) =>
+          contextEntry.id === id
+            ? { ...entry, isSubmitted: true }
+            : contextEntry,
         ),
       );
     }
   };
 
   const handleEdit = (id) => {
-    setEntries(
-      entries.map((entry) =>
+    updatePracticalExperience(
+      practicalExperience.map((entry) =>
         entry.id === id ? { ...entry, isSubmitted: false } : entry,
       ),
     );
   };
 
   const handleDelete = (id) => {
-    setEntries(entries.filter((entry) => entry.id !== id));
+    updatePracticalExperience(
+      practicalExperience.filter((entry) => entry.id !== id),
+    );
   };
 
   return (
