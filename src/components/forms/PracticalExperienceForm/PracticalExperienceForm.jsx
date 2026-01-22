@@ -8,6 +8,7 @@ function PracticalExperienceForm() {
   );
 
   const [entries, setEntries] = useState(practicalExperience);
+  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     setEntries(practicalExperience);
@@ -48,11 +49,22 @@ function PracticalExperienceForm() {
   };
 
   const handleEdit = (id) => {
-    updatePracticalExperience(
-      practicalExperience.map((entry) =>
-        entry.id === id ? { ...entry, isSubmitted: false } : entry,
-      ),
-    );
+    const entryToEdit = practicalExperience.find((entry) => entry.id === id);
+    if (entryToEdit) {
+      setEditingId(id);
+      setEntries(
+        entries.map((entry) =>
+          !entry.isSubmitted
+            ? {
+                ...entry,
+                companyName: entryToEdit.companyName,
+                positionTitle: entryToEdit.positionTitle,
+                dateOfEmployment: entryToEdit.dateOfEmployment,
+              }
+            : entry,
+        ),
+      );
+    }
   };
 
   const handleDelete = (id) => {
