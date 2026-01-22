@@ -112,7 +112,9 @@ function PracticalExperienceForm() {
                 }
               />{' '}
             </label>
-            <button onClick={() => handleSubmit(entry.id)}>Submit</button>
+            <button onClick={() => handleSubmit(entry.id)}>
+              {editingId ? 'Update' : 'Submit'}
+            </button>
           </div>
         </div>
       ))}
