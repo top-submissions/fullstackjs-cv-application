@@ -67,6 +67,22 @@ function PracticalExperienceForm() {
     }
   };
 
+  const handleCancel = () => {
+    setEditingId(null);
+    setEntries(
+      entries.map((entry) =>
+        !entry.isSubmitted
+          ? {
+              ...entry,
+              companyName: '',
+              positionTitle: '',
+              dateOfEmployment: '',
+            }
+          : entry,
+      ),
+    );
+  };
+
   const handleDelete = (id) => {
     updatePracticalExperience(
       practicalExperience.filter((entry) => entry.id !== id),
@@ -115,6 +131,7 @@ function PracticalExperienceForm() {
             <button onClick={() => handleSubmit(entry.id)}>
               {editingId ? 'Update' : 'Submit'}
             </button>
+            {editingId && <button onClick={handleCancel}>Cancel</button>}
           </div>
         </div>
       ))}
