@@ -7,6 +7,7 @@ import PracticalExperienceForm from '../../components/forms/PracticalExperienceF
 import CVPreview from '../../components/views/CVPreview/CVPreview';
 import GeneralInformationProvider from '../../components/providers/GeneralInformationProvider/GeneralInformationProvider';
 import EducationalExperienceProvider from '../../components/providers/EducationalExperienceProvider/EducationalExperienceProvider';
+import PracticalExperienceProvider from '../../components/providers/PracticalExperienceProvider/PracticalExperienceProvider';
 
 function App() {
   return (
@@ -14,16 +15,18 @@ function App() {
       <h1 className={styles.headerTitle}>CV Application</h1>
       <GeneralInformationProvider>
         <EducationalExperienceProvider>
-          <div className={styles.mainContent}>
-            <div className={styles.formSide}>
-              <GeneralInformationForm />
-              <EducationalExperienceForm />
-              <PracticalExperienceForm />
+          <PracticalExperienceProvider>
+            <div className={styles.mainContent}>
+              <div className={styles.formSide}>
+                <GeneralInformationForm />
+                <EducationalExperienceForm />
+                <PracticalExperienceForm />
+              </div>
+              <div className={styles.previewSide}>
+                <CVPreview />
+              </div>
             </div>
-            <div className={styles.previewSide}>
-              <CVPreview />
-            </div>
-          </div>
+          </PracticalExperienceProvider>
         </EducationalExperienceProvider>
       </GeneralInformationProvider>
       <button className={styles.printButton} onClick={() => window.print()}>
