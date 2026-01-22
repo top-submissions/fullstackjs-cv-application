@@ -312,4 +312,33 @@ describe('PracticalExperienceForm', () => {
     const rows = tbody.querySelectorAll('tr');
     expect(rows.length).toBeGreaterThan(0);
   });
-};);
+
+  it('displays Update button text when editing an entry', async () => {
+    const user = userEvent.setup();
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, '2020-10-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    expect(screen.getByRole('button', { name: /update/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /^submit$/i }),
+    ).not.toBeInTheDocument();
+  });
+});
