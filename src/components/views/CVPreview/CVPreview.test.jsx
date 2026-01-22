@@ -5,8 +5,10 @@ import CVPreview from './CVPreview';
 import React from 'react';
 import GeneralInformationForm from '../../forms/GeneralInformationForm/GeneralInformationForm';
 import EducationalExperienceForm from '../../forms/EducationalExperienceForm/EducationalExperienceForm';
+import PracticalExperienceForm from '../../forms/PracticalExperienceForm/PracticalExperienceForm';
 import GeneralInformationProvider from '../../providers/GeneralInformationProvider/GeneralInformationProvider';
 import EducationalExperienceProvider from '../../providers/EducationalExperienceProvider/EducationalExperienceProvider';
+import PracticalExperienceProvider from '../../providers/PracticalExperienceProvider/PracticalExperienceProvider';
 
 describe('CVPreview', () => {
   it('renders the General Information section header', () => {
@@ -97,6 +99,35 @@ describe('CVPreview', () => {
 
     expect(allSchoolInstances.length).toBeGreaterThan(0);
     expect(allTitleInstances.length).toBeGreaterThan(0);
+    expect(allDateInstances.length).toBeGreaterThan(0);
+  });
+
+  it('updates after submitting Practical Experience form fields', async () => {
+    const user = userEvent.setup();
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+        <CVPreview />
+      </PracticalExperienceProvider>,
+    );
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    const positionInput = screen.getByLabelText(/position title/i);
+    const dateInput = screen.getByLabelText(/date of employment/i);
+
+    await user.type(companyNameInput, 'Google Inc.');
+    await user.type(positionInput, 'Software Engineer');
+    await user.type(dateInput, '2020-10-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    const allCompanyInstances = screen.getAllByText('Google Inc.');
+    const allPositionInstances = screen.getAllByText('Software Engineer');
+    const allDateInstances = screen.getAllByText('2020-10-01');
+
+    expect(allCompanyInstances.length).toBeGreaterThan(0);
+    expect(allPositionInstances.length).toBeGreaterThan(0);
     expect(allDateInstances.length).toBeGreaterThan(0);
   });
 });
