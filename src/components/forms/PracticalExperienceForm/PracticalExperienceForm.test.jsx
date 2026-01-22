@@ -341,4 +341,59 @@ describe('PracticalExperienceForm', () => {
       screen.queryByRole('button', { name: /^submit$/i }),
     ).not.toBeInTheDocument();
   });
+
+  it('displays Cancel button when editing and resets form when clicked', async () => {
+    const user = userEvent.setup();
+    render(
+      <PracticalExperienceProvider>
+        <PracticalExperienceForm />
+      </PracticalExperienceProvider>,
+    );
+
+    const companyNameInput = screen.getByLabelText(/company name/i);
+    await user.type(companyNameInput, 'Google Inc.');
+    const positionInput = screen.getByLabelText(/position title/i);
+    await user.type(positionInput, 'Software Engineer');
+    const dateInput = screen.getByLabelText(/date of employment/i);
+    await user.type(dateInput, '2020-10-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    // Cancel button should not be visible initially
+    expect(
+      screen.queryByRole('button', { name: /cancel/i }),
+    ).not.toBeInTheDocument();
+
+    // Click edit button
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    // Cancel button should now be visible
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+
+    // Click cancel button
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    // Form should be cleared
+    const companyInputAfterCancel = screen.getByLabelText(/company name/i);
+    const positionInputAfterCancel = screen.getByLabelText(/position title/i);
+    const dateInputAfterCancel = screen.getByLabelText(/date of employment/i);
+
+    expect(companyInputAfterCancel.value).toBe('');
+    expect(positionInputAfterCancel.value).toBe('');
+    expect(dateInputAfterCancel.value).toBe('');
+
+    // Submit button should be back (not Update)
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /update/i }),
+    ).not.toBeInTheDocument();
+
+    // Cancel button should be hidden again
+    expect(
+      screen.queryByRole('button', { name: /cancel/i }),
+    ).not.toBeInTheDocument();
+  });
 });
