@@ -13,17 +13,6 @@ function PracticalExperienceForm() {
     setEntries(practicalExperience);
   }, [practicalExperience]);
 
-  const handleAdd = () => {
-    const newEntry = {
-      id: crypto.randomUUID(),
-      companyName: '',
-      positionTitle: '',
-      dateOfEmployment: '',
-      isSubmitted: false,
-    };
-    updatePracticalExperience([...practicalExperience, newEntry]);
-  };
-
   const handleUpdate = (id, field, value) => {
     setEntries(
       entries.map((entry) =>
@@ -150,9 +139,6 @@ function PracticalExperienceForm() {
           </tbody>
         </table>
       )}
-      <button className={styles.addButton} onClick={handleAdd}>
-        Add
-      </button>
     </div>
   );
 }
