@@ -13,17 +13,6 @@ function EducationalExperienceForm() {
     setLocalEntries(educationalExperience);
   }, [educationalExperience]);
 
-  const handleAdd = () => {
-    const newEntry = {
-      id: crypto.randomUUID(),
-      schoolName: '',
-      titleOfStudy: '',
-      dateOfStudy: '',
-      isSubmitted: false,
-    };
-    updateEducationalExperience([...educationalExperience, newEntry]);
-  };
-
   const handleUpdate = (id, field, value) => {
     setLocalEntries(
       localEntries.map((entry) =>
@@ -152,9 +141,6 @@ function EducationalExperienceForm() {
           </tbody>
         </table>
       )}
-      <button className={styles.addButton} onClick={handleAdd}>
-        Add
-      </button>
     </div>
   );
 }
