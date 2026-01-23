@@ -23,6 +23,34 @@ function PracticalExperienceForm() {
   };
 
   const handleSubmit = (id) => {
+    // check if editingId existing (we are in editing mode)
+    if (editingId) {
+      // find the entry being edited from the practicalExperience context
+      const entryToUpdate = practicalExperience.find((e) => e.id === editingId);
+      // find the unsubmitted entry which holds the current form data
+      const formState = entries.find((e) => !e.isSubmitted);
+
+      // update the practicalExperience context
+      updatePracticalExperience(
+        practicalExperience.map((entry) =>
+          entry.id === editingId
+            ? {
+                // merge the original entry with the new form data
+                ...entryToUpdate,
+                companyName: formState.companyName,
+                positionTitle: formState.positionTitle,
+                dateOfEmployment: formState.dateOfEmployment,
+              }
+            : entry,
+        ),
+      );
+      // reset the editingId
+      setEditingId(null);
+      // clear the form fields
+      handleCancel();
+      return;
+    }
+
     const entry = entries.find((e) => e.id === id);
     const dateRegex = /^[\d\s\-/]+$/;
     if (
