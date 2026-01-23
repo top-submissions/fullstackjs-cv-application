@@ -66,87 +66,92 @@ function EducationalExperienceForm() {
     );
   };
 
+  const submittedEntries = localEntries.filter((entry) => entry.isSubmitted);
+  const unsubmittedEntries = localEntries.filter((entry) => !entry.isSubmitted);
+
   return (
     <div className={styles.formSection}>
       <h2>Educational Experience</h2>
-      <table className={styles.formContainer}>
-        <thead>
-          <tr>
-            <th>School Name</th>
-            <th>Title of Study</th>
-            <th>Date of Study</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {localEntries.map((entry) => (
-            <tr key={entry.id}>
-              {!entry.isSubmitted ? (
-                <>
-                  <td>
-                    <input
-                      type="text"
-                      value={entry.schoolName}
-                      onChange={(e) =>
-                        handleUpdate(entry.id, 'schoolName', e.target.value)
-                      }
-                      aria-label="School Name"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={entry.titleOfStudy}
-                      onChange={(e) =>
-                        handleUpdate(entry.id, 'titleOfStudy', e.target.value)
-                      }
-                      aria-label="Title of Study"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="date"
-                      value={entry.dateOfStudy}
-                      onChange={(e) =>
-                        handleUpdate(entry.id, 'dateOfStudy', e.target.value)
-                      }
-                      aria-label="Date of Study"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className={styles.submitButton}
-                      onClick={() => handleSubmit(entry.id)}
-                    >
-                      Submit
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td>{entry.schoolName}</td>
-                  <td>{entry.titleOfStudy}</td>
-                  <td>{entry.dateOfStudy}</td>
-                  <td>
-                    <button
-                      className={styles.editButton}
-                      onClick={() => handleEdit(entry.id)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className={styles.deleteButton}
-                      onClick={() => handleDelete(entry.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </>
-              )}
+      {unsubmittedEntries.map((entry) => (
+        <div key={entry.id}>
+          <div className={styles.formContainer}>
+            <label>
+              School Name:{' '}
+              <input
+                type="text"
+                value={entry.schoolName}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'schoolName', e.target.value)
+                }
+                aria-label="School Name"
+              />
+            </label>
+            <label>
+              Title of Study:{' '}
+              <input
+                type="text"
+                value={entry.titleOfStudy}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'titleOfStudy', e.target.value)
+                }
+                aria-label="Title of Study"
+              />
+            </label>
+            <label>
+              Date of Study:{' '}
+              <input
+                type="date"
+                value={entry.dateOfStudy}
+                onChange={(e) =>
+                  handleUpdate(entry.id, 'dateOfStudy', e.target.value)
+                }
+                aria-label="Date of Study"
+              />
+            </label>
+            <button
+              className={styles.submitButton}
+              onClick={() => handleSubmit(entry.id)}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      ))}
+      {submittedEntries.length > 0 && (
+        <table className={styles.formContainer}>
+          <thead>
+            <tr>
+              <th>School Name</th>
+              <th>Title of Study</th>
+              <th>Date of Study</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {submittedEntries.map((entry) => (
+              <tr key={entry.id}>
+                <td>{entry.schoolName}</td>
+                <td>{entry.titleOfStudy}</td>
+                <td>{entry.dateOfStudy}</td>
+                <td>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleEdit(entry.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDelete(entry.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <button className={styles.addButton} onClick={handleAdd}>
         Add
       </button>
