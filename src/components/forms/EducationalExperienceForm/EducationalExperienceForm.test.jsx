@@ -41,32 +41,38 @@ describe('EducationalExperienceForm', () => {
     );
 
     const schoolNameInput = screen.getByLabelText(/school name/i);
-    const container = schoolNameInput.closest('table');
+    const container = schoolNameInput.closest('div');
 
     expect(container.className).toMatch(/formContainer/);
   });
 
-  it('renders educational experience entries in a table format', () => {
+  it('renders unsubmitted entry input fields in normal form format with labels (not in table cells)', () => {
     render(
       <EducationalExperienceProvider>
         <EducationalExperienceForm />
       </EducationalExperienceProvider>,
     );
 
-    const table = screen.getByRole('table');
-    expect(table).toBeInTheDocument();
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
 
-    const thead = table.querySelector('thead');
-    expect(thead).toBeInTheDocument();
+    // Inputs should NOT be inside table cells
+    const schoolNameCell = schoolNameInput.closest('td');
+    const titleCell = titleInput.closest('td');
+    const dateCell = dateInput.closest('td');
 
-    expect(screen.getByText(/school name/i)).toBeInTheDocument();
-    expect(screen.getByText(/title of study/i)).toBeInTheDocument();
-    expect(screen.getByText(/date of study/i)).toBeInTheDocument();
+    expect(schoolNameCell).toBeNull();
+    expect(titleCell).toBeNull();
+    expect(dateCell).toBeNull();
 
-    const tbody = table.querySelector('tbody');
-    expect(tbody).toBeInTheDocument();
+    // Inputs should be inside label elements
+    const schoolNameLabel = schoolNameInput.closest('label');
+    const titleLabel = titleInput.closest('label');
+    const dateLabel = dateInput.closest('label');
 
-    const rows = tbody.querySelectorAll('tr');
-    expect(rows.length).toBeGreaterThan(0);
+    expect(schoolNameLabel).toBeInTheDocument();
+    expect(titleLabel).toBeInTheDocument();
+    expect(dateLabel).toBeInTheDocument();
   });
 });
