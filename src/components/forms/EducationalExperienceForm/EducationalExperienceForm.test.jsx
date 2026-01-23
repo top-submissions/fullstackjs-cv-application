@@ -86,4 +86,21 @@ describe('EducationalExperienceForm', () => {
     const addButton = screen.queryByRole('button', { name: /add/i });
     expect(addButton).not.toBeInTheDocument();
   });
-});
+
+  it('always renders at least one unsubmitted entry form', () => {
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    const titleInput = screen.getByLabelText(/title of study/i);
+    const dateInput = screen.getByLabelText(/date of study/i);
+
+    expect(schoolNameInput).toBeInTheDocument();
+    expect(titleInput).toBeInTheDocument();
+    expect(dateInput).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
+};);
