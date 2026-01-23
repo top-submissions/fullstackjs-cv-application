@@ -31,13 +31,20 @@ function EducationalExperienceForm() {
       entry.dateOfStudy.trim() &&
       dateRegex.test(entry.dateOfStudy)
     ) {
-      updateEducationalExperience(
-        educationalExperience.map((contextEntry) =>
+      updateEducationalExperience([
+        ...educationalExperience.map((contextEntry) =>
           contextEntry.id === id
             ? { ...entry, isSubmitted: true }
             : contextEntry,
         ),
-      );
+        {
+          id: crypto.randomUUID(),
+          schoolName: '',
+          titleOfStudy: '',
+          dateOfStudy: '',
+          isSubmitted: false,
+        },
+      ]);
     }
   };
 
