@@ -75,4 +75,15 @@ describe('EducationalExperienceForm', () => {
     expect(titleLabel).toBeInTheDocument();
     expect(dateLabel).toBeInTheDocument();
   });
+
+  it('does not render an Add button', () => {
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    const addButton = screen.queryByRole('button', { name: /add/i });
+    expect(addButton).not.toBeInTheDocument();
+  });
 });
