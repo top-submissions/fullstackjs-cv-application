@@ -58,6 +58,11 @@ function EducationalExperienceForm() {
     );
   };
 
+  const handleCancel = () => {
+    // Reset editing state
+    setEditingId(null);
+  };
+
   const handleDelete = (id) => {
     updateEducationalExperience(
       educationalExperience.filter((entry) => entry.id !== id),
@@ -106,12 +111,10 @@ function EducationalExperienceForm() {
                 aria-label="Date of Study"
               />
             </label>
-            <button
-              className={styles.submitButton}
-              onClick={() => handleSubmit(entry.id)}
-            >
+            <button onClick={() => handleSubmit(entry.id)}>
               {editingId ? 'Update' : 'Submit'}
             </button>
+            {editingId && <button onClick={handleCancel}>Cancel</button>}
           </div>
         </div>
       ))}
