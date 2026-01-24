@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import EducationalExperienceForm from './EducationalExperienceForm';
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import EducationalExperienceProvider from '../../providers/EducationalExperienceProvider/EducationalExperienceProvider'; // ADDED: Import for wrapping
 
 describe('EducationalExperienceForm', () => {
@@ -103,4 +104,35 @@ describe('EducationalExperienceForm', () => {
     expect(dateInput).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
-};);
+
+  it('displays Update button text when editing an entry', async () => {
+    const user = userEvent.setup();
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    // Arrange: Fill out the form with test data
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'MIT');
+    const titleInput = screen.getByLabelText(/title of study/i);
+    await user.type(titleInput, 'Computer Science');
+    const dateInput = screen.getByLabelText(/date of study/i);
+    await user.type(dateInput, '2020-09-01');
+
+    // Submit the entry
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    // Act: Click the Edit button on the submitted entry
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    // Assert: Button text should change to "Update"
+    expect(screen.getByRole('button', { name: /update/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /^submit$/i }),
+    ).not.toBeInTheDocument();
+  });
+});
