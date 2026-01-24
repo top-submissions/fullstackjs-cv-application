@@ -135,4 +135,41 @@ describe('EducationalExperienceForm', () => {
       screen.queryByRole('button', { name: /^submit$/i }),
     ).not.toBeInTheDocument();
   });
+
+  it('displays Cancel button when editing and resets form when clicked', async () => {
+    const user = userEvent.setup();
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    // Arrange: Create and submit an entry
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Stanford University');
+    const titleInput = screen.getByLabelText(/title of study/i);
+    await user.type(titleInput, 'Electrical Engineering');
+    const dateInput = screen.getByLabelText(/date of study/i);
+    await user.type(dateInput, '2019-08-15');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    // Enter editing mode
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    // Verify Cancel button appears when editing
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+
+    // Act: Click Cancel button
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    // Assert: Cancel button disappears, form resets
+    expect(
+      screen.queryByRole('button', { name: /cancel/i }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
 });
