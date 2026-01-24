@@ -172,4 +172,54 @@ describe('EducationalExperienceForm', () => {
     ).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+
+  it('updates existing entry when Update button is clicked during editing', async () => {
+    const user = userEvent.setup();
+    render(
+      <EducationalExperienceProvider>
+        <EducationalExperienceForm />
+      </EducationalExperienceProvider>,
+    );
+
+    // Arrange: Create and submit initial entry
+    const schoolNameInput = screen.getByLabelText(/school name/i);
+    await user.type(schoolNameInput, 'Initial School');
+    const titleInput = screen.getByLabelText(/title of study/i);
+    await user.type(titleInput, 'Initial Title');
+    const dateInput = screen.getByLabelText(/date of study/i);
+    await user.type(dateInput, '2020-01-01');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    // Edit the entry
+    const editButton = screen.getByRole('button', { name: /edit/i });
+    await user.click(editButton);
+
+    // Modify the form data
+    const schoolNameInputAfterSubmit = screen.getByLabelText(/school name/i);
+    await user.clear(schoolNameInputAfterSubmit);
+    await user.type(schoolNameInputAfterSubmit, 'Updated School');
+    const titleInputAfterSubmit = screen.getByLabelText(/title of study/i);
+    await user.clear(titleInputAfterSubmit);
+    await user.type(titleInputAfterSubmit, 'Updated Title');
+    const dateInputAfterSubmit = screen.getByLabelText(/date of study/i);
+    await user.clear(dateInputAfterSubmit);
+    await user.type(dateInputAfterSubmit, '2021-01-01');
+
+    // Act: Click Update button
+    const updateButton = screen.getByRole('button', { name: /update/i });
+    await user.click(updateButton);
+
+    // Assert: Original entry should be updated, not duplicated
+    const schoolCells = screen.getAllByText(/Updated School/i);
+    expect(schoolCells.length).toBe(1); // Should only have one entry with this name
+
+    const titleCells = screen.getAllByText(/Updated Title/i);
+    expect(titleCells.length).toBe(1); // Should only have one entry with this title
+
+    // Original data should not appear anymore
+    expect(screen.queryByText(/Initial School/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Initial Title/i)).not.toBeInTheDocument();
+  });
 });
