@@ -8,6 +8,7 @@ function EducationalExperienceForm() {
   );
 
   const [localEntries, setLocalEntries] = useState(educationalExperience);
+  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     setLocalEntries(educationalExperience);
@@ -49,6 +50,7 @@ function EducationalExperienceForm() {
   };
 
   const handleEdit = (id) => {
+    setEditingId(id);
     updateEducationalExperience(
       educationalExperience.map((entry) =>
         entry.id === id ? { ...entry, isSubmitted: false } : entry,
@@ -108,7 +110,7 @@ function EducationalExperienceForm() {
               className={styles.submitButton}
               onClick={() => handleSubmit(entry.id)}
             >
-              Submit
+              {editingId ? 'Update' : 'Submit'}
             </button>
           </div>
         </div>
