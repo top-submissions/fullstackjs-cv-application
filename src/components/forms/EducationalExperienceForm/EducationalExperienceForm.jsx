@@ -22,7 +22,33 @@ function EducationalExperienceForm() {
     );
   };
 
-  const handleSubmit = (id) => {
+  const handleUpdateEntry = () => {
+    // Find the entry being edited from the context
+    const entryToUpdate = educationalExperience.find((e) => e.id === editingId);
+    // Find the unsubmitted entry which holds the current form data
+    const formState = localEntries.find((e) => !e.isSubmitted);
+
+    if (entryToUpdate && formState) {
+      // Update the educationalExperience context with modified data
+      updateEducationalExperience(
+        educationalExperience.map((entry) =>
+          entry.id === editingId
+            ? {
+                ...entryToUpdate,
+                schoolName: formState.schoolName,
+                titleOfStudy: formState.titleOfStudy,
+                dateOfStudy: formState.dateOfStudy,
+                isSubmitted: true,
+              }
+            : entry,
+        ),
+      );
+      // Reset editing state
+      setEditingId(null);
+    }
+  };
+
+  const handleCreateEntry = (id) => {
     const entry = localEntries.find((e) => e.id === id);
     const dateRegex = /^[\d\s\-/]+$/;
     if (
@@ -49,18 +75,51 @@ function EducationalExperienceForm() {
     }
   };
 
+  const handleSubmit = (id) => {
+    if (editingId) {
+      handleUpdateEntry();
+    } else {
+      handleCreateEntry(id);
+    }
+  };
+
   const handleEdit = (id) => {
-    setEditingId(id);
-    updateEducationalExperience(
-      educationalExperience.map((entry) =>
-        entry.id === id ? { ...entry, isSubmitted: false } : entry,
-      ),
-    );
+    // Find the entry being edited from the context
+    const entryToEdit = educationalExperience.find((entry) => entry.id === id);
+
+    if (entryToEdit) {
+      setEditingId(id);
+      // Update localEntries to load the data into the unsubmitted form
+      setLocalEntries(
+        localEntries.map((entry) =>
+          !entry.isSubmitted
+            ? {
+                ...entry,
+                schoolName: entryToEdit.schoolName,
+                titleOfStudy: entryToEdit.titleOfStudy,
+                dateOfStudy: entryToEdit.dateOfStudy,
+              }
+            : entry,
+        ),
+      );
+    }
   };
 
   const handleCancel = () => {
-    // Reset editing state
     setEditingId(null);
+    // Clear the form fields when canceling
+    setLocalEntries(
+      localEntries.map((entry) =>
+        !entry.isSubmitted
+          ? {
+              ...entry,
+              schoolName: '',
+              titleOfStudy: '',
+              dateOfStudy: '',
+            }
+          : entry,
+      ),
+    );
   };
 
   const handleDelete = (id) => {
