@@ -1,8 +1,29 @@
 {
-  "name": "template-react",
+  "name": "fullstackjs-cv-application",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "A CV/Resume application built with React as part of The Odin Project curriculum",
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/top-submissions/fullstackjs-cv-application.git"
+  },
+  "bugs": {
+    "url": "https://github.com/top-submissions/fullstackjs-cv-application/issues"
+  },
+  "homepage": "https://github.com/top-submissions/fullstackjs-cv-application#readme",
+  "keywords": [
+    "react",
+    "cv-application",
+    "resume-builder",
+    "the-odin-project",
+    "vite",
+    "react-context",
+    "forms",
+    "crud-operations"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
